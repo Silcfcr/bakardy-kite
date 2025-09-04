@@ -1,0 +1,102 @@
+{
+    "title": "Services & Pricing",
+    "subtitle": "Choose Your Kitesurfing Adventure",
+    "description": "From beginners to advanced riders, I offer personalized kitesurfing experiences tailored to your skill level and goals. All sessions include safety equipment and professional instruction.",
+    "services": [
+        {
+            "id": "single-lesson",
+            "name": "Single Lesson",
+            "icon": "🏄‍♂️",
+            "duration": "2-3 hours",
+            "description": "Perfect for beginners or those wanting to improve specific skills. Includes equipment, safety briefing, and personalized instruction.",
+            "features": [
+                "Safety equipment included",
+                "Personalized instruction",
+                "Equipment setup & breakdown",
+                "Progress tracking",
+                "Photo/video feedback"
+            ],
+            "price": 89,
+            "currency": "EUR",
+            "popular": false,
+            "bookingLink": "https://calendly.com/yourusername/single-lesson"
+        },
+        {
+            "id": "beginner-course",
+            "name": "Beginner Course",
+            "icon": "🌊",
+            "duration": "3 days",
+            "description": "Complete foundation course for absolute beginners. Learn safety, kite control, body dragging, and water start in a structured program.",
+            "features": [
+                "3 full days of instruction",
+                "All safety equipment",
+                "Theory & practical sessions",
+                "Progress certificate",
+                "Follow-up support",
+                "Group discounts available"
+            ],
+            "price": 249,
+            "currency": "EUR",
+            "popular": true,
+            "bookingLink": "https://calendly.com/yourusername/beginner-course"
+        },
+        {
+            "id": "advanced-lesson",
+            "name": "Advanced Lesson",
+            "icon": "🚀",
+            "duration": "2-4 hours",
+            "description": "For experienced riders wanting to master jumps, tricks, or advanced techniques. Customized to your specific goals.",
+            "features": [
+                "Advanced technique focus",
+                "Jump & trick instruction",
+                "Video analysis",
+                "Equipment optimization",
+                "Competition preparation",
+                "Custom training plan"
+            ],
+            "price": 120,
+            "currency": "EUR",
+            "popular": false,
+            "bookingLink": "https://calendly.com/yourusername/advanced-lesson"
+        },
+        {
+            "id": "remote-coaching",
+            "name": "Remote Coaching",
+            "icon": "💻",
+            "duration": "1 month",
+            "description": "Personalized coaching program with video analysis, training plans, and ongoing support. Perfect for riders between sessions.",
+            "features": [
+                "Monthly video analysis",
+                "Custom training plans",
+                "Weekly check-ins",
+                "Equipment recommendations",
+                "Progress tracking",
+                "24/7 chat support"
+            ],
+            "price": 199,
+            "currency": "EUR",
+            "popular": false,
+            "bookingLink": "https://calendly.com/yourusername/remote-coaching"
+        },
+        {
+            "id": "kite-safari",
+            "name": "Kite Safari",
+            "icon": "🗺️",
+            "duration": "5-7 days",
+            "description": "Multi-day adventure exploring the best kitesurfing spots. Includes accommodation, transportation, and daily sessions.",
+            "features": [
+                "Multiple locations",
+                "Accommodation included",
+                "Transportation provided",
+                "Daily instruction",
+                "Local guide knowledge",
+                "Equipment transport",
+                "Group activities"
+            ],
+            "price": 899,
+            "currency": "EUR",
+            "popular": false,
+            "bookingLink": "https://calendly.com/yourusername/kite-safari"
+        }
+    ]
+}

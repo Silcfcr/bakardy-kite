@@ -1,6 +1,5 @@
 {
-    "title": "Introduce your product quickly & effectively",
-    "text": "Landy comes with multi-lingual support, all of the content is stored in the JSON files, so that you can manage the texts without having any prior knowledge in developing web applications using React.js.",
-    "button": "Get started"
-  }
-  
+  "title": "Meet Your Kitesurfing Instructor",
+  "text": "Hi, I'm Bakar — a passionate kitesurf instructor from Egypt with deep roots in the Red Sea. I've spent over 14 years on the water, teaching hundreds of students from around the world how to ride, progress, and fall in love with kitesurfing.\n\nFrom first-time beginners to advanced riders chasing new tricks, I've guided students through every step of their kitesurfing journey. My home base is El Gouna, where the steady winds and turquoise lagoons provide perfect conditions to learn and grow in the sport.\n\nFor me, kitesurfing is more than just technique — it's about sharing the joy, freedom, and energy of the ocean.",
+  "button": "Book Your Session"
+}

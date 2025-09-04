@@ -7,6 +7,7 @@ import { Button } from "../../common/Button";
 import {
   HeaderSection,
   LogoContainer,
+  LogoText,
   Burger,
   NotHidden,
   Menu,
@@ -25,22 +26,82 @@ const Header = ({ t }: { t: TFunction }) => {
 
   const MenuItem = () => {
     const scrollTo = (id: string) => {
-      const element = document.getElementById(id) as HTMLDivElement;
-      element.scrollIntoView({
-        behavior: "smooth",
-      });
-      setVisibility(false);
+      console.log(`Attempting to scroll to: ${id}`);
+
+      // Function to attempt scrolling
+      const attemptScroll = () => {
+        // Try multiple approaches to find the element
+        let element = document.getElementById(id);
+
+        if (!element) {
+          // Try querySelector as fallback
+          element = document.querySelector(`[id="${id}"]`);
+        }
+
+        if (!element) {
+          // Try to find by data attribute
+          element = document.querySelector(`[data-section="${id}"]`);
+        }
+
+        console.log(`Element found:`, element);
+
+        if (element) {
+          try {
+            element.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+              inline: "nearest"
+            });
+            setVisibility(false);
+            return true;
+          } catch (error) {
+            console.error("Scroll error:", error);
+            // Fallback to manual scroll
+            window.scrollTo({
+              top: element.offsetTop - 100,
+              behavior: "smooth"
+            });
+            setVisibility(false);
+            return true;
+          }
+        }
+        return false;
+      };
+
+      // Try immediately
+      if (attemptScroll()) return;
+
+      // If not found, wait a bit and try again (for lazy-loaded components)
+      setTimeout(() => {
+        if (attemptScroll()) return;
+
+        // Final attempt with longer delay
+        setTimeout(() => {
+          if (attemptScroll()) return;
+
+          // Last resort - log all available elements
+          console.log("All elements with IDs:",
+            Array.from(document.querySelectorAll('[id]')).map(el => ({ id: el.id, tagName: el.tagName, visible: (el as HTMLElement).offsetParent !== null }))
+          );
+          console.log("All elements with data-section:",
+            Array.from(document.querySelectorAll('[data-section]')).map(el => ({ section: el.getAttribute('data-section'), tagName: el.tagName, visible: (el as HTMLElement).offsetParent !== null }))
+          );
+        }, 500);
+      }, 100);
     };
     return (
       <>
-        <CustomNavLinkSmall onClick={() => scrollTo("about")}>
-          <Span>{t("About")}</Span>
+        <CustomNavLinkSmall onClick={() => scrollTo("services")}>
+          <Span>{t("Services")}</Span>
         </CustomNavLinkSmall>
-        <CustomNavLinkSmall onClick={() => scrollTo("mission")}>
-          <Span>{t("Mission")}</Span>
+        <CustomNavLinkSmall onClick={() => scrollTo("gallery")}>
+          <Span>{t("Gallery")}</Span>
         </CustomNavLinkSmall>
-        <CustomNavLinkSmall onClick={() => scrollTo("product")}>
-          <Span>{t("Product")}</Span>
+        <CustomNavLinkSmall onClick={() => scrollTo("schedule")}>
+          <Span>{t("Schedule")}</Span>
+        </CustomNavLinkSmall>
+        <CustomNavLinkSmall onClick={() => scrollTo("highlights")}>
+          <Span>{t("Highlights")}</Span>
         </CustomNavLinkSmall>
         <CustomNavLinkSmall
           style={{ width: "180px" }}
@@ -59,7 +120,7 @@ const Header = ({ t }: { t: TFunction }) => {
       <Container>
         <Row justify="space-between">
           <LogoContainer to="/" aria-label="homepage">
-            <SvgIcon src="logo.svg" width="101px" height="64px" />
+            <LogoText>Bakardy Kite</LogoText>
           </LogoContainer>
           <NotHidden>
             <MenuItem />

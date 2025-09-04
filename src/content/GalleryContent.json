@@ -1,0 +1,42 @@
+{
+    "instagramHandle": "@bakardy_kite",
+    "instagramLink": "https://instagram.com/bakardy_kite",
+    "posts": [
+        {
+            "id": "1",
+            "imageUrl": "https://www.instagram.com/p/DOI7LoPgnQy/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+            "caption": "Perfect conditions in El Gouna",
+            "postUrl": "https://www.instagram.com/p/DOI7LoPgnQy/"
+        },
+        {
+            "id": "2",
+            "imageUrl": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop&crop=center",
+            "caption": "Blue skies and steady winds",
+            "postUrl": "https://www.instagram.com/p/EXAMPLE2/"
+        },
+        {
+            "id": "3",
+            "imageUrl": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center",
+            "caption": "Advanced tricks in action",
+            "postUrl": "https://www.instagram.com/p/EXAMPLE3/"
+        },
+        {
+            "id": "4",
+            "imageUrl": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop&crop=center",
+            "caption": "Equipment preparation",
+            "postUrl": "https://www.instagram.com/p/EXAMPLE4/"
+        },
+        {
+            "id": "5",
+            "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=400&fit=crop&crop=center",
+            "caption": "Beginner progress",
+            "postUrl": "https://www.instagram.com/p/EXAMPLE5/"
+        },
+        {
+            "id": "6",
+            "imageUrl": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center",
+            "caption": "Golden hour sessions",
+            "postUrl": "https://www.instagram.com/p/EXAMPLE6/"
+        }
+    ]
+}

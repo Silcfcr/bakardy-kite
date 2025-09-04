@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { PRIMARY, TEXT, BACKGROUND } from "./colors";
 
 export const Styles = createGlobalStyle`
 
@@ -27,19 +28,19 @@ export const Styles = createGlobalStyle`
         padding:0;
         border: 0;
         outline: 0;
-        background: #fff;
+        background: ${BACKGROUND.primary};
         overflow-x: hidden;
     }
 
     a:hover {
-        color: #18216d;
+        color: ${TEXT.primary};
     }
 
     input,
     textarea {
         border-radius: 4px;
         border: 0;
-        background: rgb(241, 242, 243);
+        background: ${BACKGROUND.tertiary};
         transition: all 0.3s ease-in-out;  
         outline: none;
         width: 100%;  
@@ -47,7 +48,7 @@ export const Styles = createGlobalStyle`
 
         :focus-within {
             background: none;
-            box-shadow: #2e186a 0px 0px 0px 1px;
+            box-shadow: ${PRIMARY.main} 0px 0px 0px 1px;
         }
     }
 
@@ -58,7 +59,7 @@ export const Styles = createGlobalStyle`
     h5,
     h6 {
         font-family: 'Motiva Sans Bold', serif;
-        color: #18216d;
+        color: ${TEXT.primary};
         font-size: 56px;
         line-height: 1.18;
 
@@ -72,7 +73,7 @@ export const Styles = createGlobalStyle`
     }
 
     p {
-        color: #18216d;
+        color: ${TEXT.primary};
         font-size: 21px;        
         line-height: 1.41;
     }
@@ -84,10 +85,10 @@ export const Styles = createGlobalStyle`
     a {
         text-decoration: none;
         outline: none;
-        color: #2E186A;
+        color: ${PRIMARY.main};
 
         :hover {
-            color: #2e186a;
+            color: ${PRIMARY.main};
         }
     }
     

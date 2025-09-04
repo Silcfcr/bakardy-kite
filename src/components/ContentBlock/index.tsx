@@ -40,6 +40,7 @@ const ContentBlock = ({
           justify="space-between"
           align="middle"
           id={id}
+          data-section={id}
           direction={direction}
         >
           <Col lg={11} md={11} sm={12} xs={24}>
@@ -64,7 +65,17 @@ const ContentBlock = ({
                           <Button
                             key={id}
                             color={item.color}
-                            onClick={() => scrollTo("about")}
+                            onClick={() => {
+                              if (item.title === "Contact") {
+                                scrollTo("contact");
+                              } else if (item.title === "More Information") {
+                                scrollTo("services");
+                              } else if (item.title === "WhatsApp Chat") {
+                                window.open("https://wa.me/201067685898?text=Hello! I'd like to get in touch about your kitesurfing services.", "_blank");
+                              } else {
+                                scrollTo("about");
+                              }
+                            }}
                           >
                             {t(item.title)}
                           </Button>

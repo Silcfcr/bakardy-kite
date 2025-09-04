@@ -1,0 +1,43 @@
+{
+    "title": "Why Choose Kitesurfing With Me",
+    "subtitle": "Professional Excellence & Safety First",
+    "description": "",
+    "highlights": [
+        {
+            "id": "iko-instructor",
+            "title": "IKO Instructor Level 3",
+            "description": "International Kiteboarding Organization certified instructor with the highest level of professional qualification.",
+            "icon": "🎓"
+        },
+        {
+            "id": "walkie-talkie",
+            "title": "Walkie-Talkie System",
+            "description": "Stay connected on the water with our advanced communication system for real-time guidance and safety.",
+            "icon": "📻"
+        },
+        {
+            "id": "camera-assistance",
+            "title": "Camera Assistance",
+            "description": "Professional photo and video guidance to capture your progress and best moments on the water.",
+            "icon": "📹"
+        },
+        {
+            "id": "personalized-teaching",
+            "title": "Personalized Teaching",
+            "description": "Small groups and individual attention ensure rapid progress and maximum safety.",
+            "icon": "👨‍🏫"
+        },
+        {
+            "id": "safety-first",
+            "title": "Safety First",
+            "description": "Comprehensive safety protocols and modern equipment for worry-free learning.",
+            "icon": "🛡️"
+        },
+        {
+            "id": "proven-results",
+            "title": "Proven Results",
+            "description": "14+ years of successful teaching with students progressing from beginner to advanced.",
+            "icon": "🚀"
+        }
+    ]
+}

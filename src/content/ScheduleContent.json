@@ -1,0 +1,37 @@
+{
+    "title": "Where I'll Be",
+    "subtitle": "Monthly Schedule & Locations",
+    "description": "Track my kitesurfing journey and book sessions in different locations around the world. I'm constantly traveling to experience the best wind conditions and share the stoke with fellow riders.",
+    "locations": [
+        {
+            "month": "December 2025",
+            "city": "El Gouna",
+            "country": "Egypt",
+            "dates": "Dec 1-31",
+            "description": "Kitesurfing in the beautiful waters of El Gouna. Perfect conditions for all levels.",
+            "available": true,
+            "bookingLink": "https://calendly.com/yourusername/elgouna-dec",
+            "kiteSchool": "Makani Beach Club"
+        },
+        {
+            "month": "January-April 2026",
+            "city": "Thailand",
+            "country": "Thailand",
+            "dates": "Jan 1- April 31",
+            "description": "Kitesurfing in Thailand at one of the best spots for wind and waves. Ideal for beginners and advanced riders.",
+            "available": true,
+            "bookingLink": "https://calendly.com/yourusername/thailand-jan",
+            "kiteSchool": "Phuket Kiteboarding School"
+        },
+        {
+            "month": "April 2026",
+            "city": "El Gouna",
+            "country": "Egypt",
+            "dates": "Apr 1-30",
+            "description": "Return to El Gouna for spring kitesurfing with ideal winds and warm waters.",
+            "available": true,
+            "bookingLink": "https://calendly.com/yourusername/elgouna-apr",
+            "kiteSchool": "Makani Beach Club"
+        }
+    ]
+}

@@ -10,7 +10,7 @@ import Input from "../../common/Input";
 import TextArea from "../../common/TextArea";
 import { ContactContainer, FormGroup, Span, ButtonContainer } from "./styles";
 
-const Contact = ({ title, content, id, t }: ContactProps) => {
+const Contact = ({ title, content, button, id, t }: ContactProps) => {
   const { values, errors, handleChange, handleSubmit } = useForm(validate);
 
   const ValidationType = ({ type }: ValidationTypeProps) => {
@@ -19,11 +19,29 @@ const Contact = ({ title, content, id, t }: ContactProps) => {
   };
 
   return (
-    <ContactContainer id={id}>
+    <ContactContainer id={id} data-section={id}>
       <Row justify="space-between" align="middle">
         <Col lg={12} md={11} sm={24} xs={24}>
           <Slide direction="left" triggerOnce>
             <Block title={title} content={content} />
+            {button && button.length > 0 && (
+              <div style={{ marginTop: '20px' }}>
+                {button.map((btn, index) => (
+                  <Button
+                    key={index}
+                    color={btn.color}
+                    textColor={btn.textColor}
+                    onClick={() => {
+                      if (btn.title === "WhatsApp Chat") {
+                        window.open("https://wa.me/201067685898?text=Hello! I'd like to get in touch about your kitesurfing services.", "_blank");
+                      }
+                    }}
+                  >
+                    {btn.title}
+                  </Button>
+                ))}
+              </div>
+            )}
           </Slide>
         </Col>
         <Col lg={12} md={12} sm={24} xs={24}>
@@ -38,6 +56,16 @@ const Contact = ({ title, content, id, t }: ContactProps) => {
                   onChange={handleChange}
                 />
                 <ValidationType type="name" />
+              </Col>
+              <Col span={24}>
+                <Input
+                  type="text"
+                  name="title"
+                  placeholder="Subject/Title"
+                  value={values.title || ""}
+                  onChange={handleChange}
+                />
+                <ValidationType type="title" />
               </Col>
               <Col span={24}>
                 <Input
