@@ -3,40 +3,58 @@
     "instagramLink": "https://instagram.com/bakardy_kite",
     "posts": [
         {
-            "id": "1",
-            "imageUrl": "https://www.instagram.com/p/DOI7LoPgnQy/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
-            "caption": "Perfect conditions in El Gouna",
-            "postUrl": "https://www.instagram.com/p/DOI7LoPgnQy/"
-        },
-        {
             "id": "2",
-            "imageUrl": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop&crop=center",
+            "imageUrl": "/Bakar2.jpeg",
             "caption": "Blue skies and steady winds",
             "postUrl": "https://www.instagram.com/p/EXAMPLE2/"
         },
         {
             "id": "3",
-            "imageUrl": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center",
+            "imageUrl": "/Bakar3.jpeg",
             "caption": "Advanced tricks in action",
             "postUrl": "https://www.instagram.com/p/EXAMPLE3/"
         },
         {
             "id": "4",
-            "imageUrl": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop&crop=center",
+            "imageUrl": "/Bakar4.jpeg",
             "caption": "Equipment preparation",
             "postUrl": "https://www.instagram.com/p/EXAMPLE4/"
         },
         {
             "id": "5",
-            "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=400&fit=crop&crop=center",
+            "imageUrl": "/Bakar5.jpeg",
             "caption": "Beginner progress",
             "postUrl": "https://www.instagram.com/p/EXAMPLE5/"
         },
         {
             "id": "6",
-            "imageUrl": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center",
+            "imageUrl": "/Bakar6.jpeg",
             "caption": "Golden hour sessions",
             "postUrl": "https://www.instagram.com/p/EXAMPLE6/"
+        },
+        {
+            "id": "7",
+            "imageUrl": "/Bakar7.jpeg",
+            "caption": "Professional instruction",
+            "postUrl": "https://www.instagram.com/p/EXAMPLE7/"
+        },
+        {
+            "id": "8",
+            "imageUrl": "/Bakar8.jpeg",
+            "caption": "Safety first approach",
+            "postUrl": "https://www.instagram.com/p/EXAMPLE8/"
+        },
+        {
+            "id": "9",
+            "imageUrl": "/Bakar9.jpeg",
+            "caption": "Amazing kitesurfing moments",
+            "postUrl": "https://www.instagram.com/p/EXAMPLE9/"
+        },
+        {
+            "id": "10",
+            "imageUrl": "/Bakar10.jpeg",
+            "caption": "Join us for the adventure",
+            "postUrl": "https://www.instagram.com/p/EXAMPLE10/"
         }
     ]
 }

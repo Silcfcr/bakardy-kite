@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import GalleryContent from "../../content/GalleryContent.json";
-import { BACKGROUND, INSTAGRAM, GRADIENTS, TEXT, BORDER } from "../../styles/colors";
+import { GRADIENTS, BORDER } from "../../styles/colors";
 
 interface InstagramPost {
     id: string;
@@ -160,28 +159,5 @@ const PostCaption = styled.div`
   border-top: 1px solid ${BORDER.light};
 `;
 
-const BottomCTA = styled.div`
-  text-align: center;
-`;
-
-const InstagramButton = styled.button`
-  background: ${GRADIENTS.instagram};
-  color: white;
-  border: none;
-  padding: 16px 32px;
-  border-radius: 30px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(225, 48, 108, 0.4);
-  }
-`;
 
 export default Gallery;

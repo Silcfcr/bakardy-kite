@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import HighlightsContent from "../../content/HighlightsContent.json";
-import { BACKGROUND, TEXT, BORDER, GRADIENTS } from "../../styles/colors";
+import { TEXT, GRADIENTS, INTERACTIVE } from "../../styles/colors";
 
 interface Highlight {
     id: string;
@@ -124,7 +123,7 @@ const IconContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-right: 20px;
-  border: 2px solid ${BORDER.accent};
+  border: 2px solid ${INTERACTIVE.hover};
 `;
 
 const Icon = styled.div`

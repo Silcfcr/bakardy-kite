@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import ScheduleContent from "../../content/ScheduleContent.json";
-import { BACKGROUND, TEXT, SECONDARY, ACCENT, GRADIENTS, BORDER, NEUTRAL, INTERACTIVE, PRIMARY } from "../../styles/colors";
+import { TEXT, SECONDARY, ACCENT, GRADIENTS, NEUTRAL, INTERACTIVE } from "../../styles/colors";
 
 interface Location {
     month: string;
@@ -147,7 +146,7 @@ const TimelineContainer = styled.div`
     transform: translateX(-50%);
     
     @media (max-width: 768px) {
-      left: 30px;
+      display: none;
     }
   }
 `;
@@ -171,10 +170,16 @@ const TimelineItem = styled.div<{ isEven: boolean }>`
   `}
   
   @media (max-width: 768px) {
-    flex-direction: row !important;
+    flex-direction: column !important;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 30px;
+    
     .location-card {
-      margin-left: 70px !important;
+      margin-left: 0 !important;
       margin-right: 0 !important;
+      margin-top: 15px;
+      max-width: 100%;
     }
   }
 `;
@@ -192,6 +197,12 @@ const TimelineDot = styled.div<{ isActive: boolean }>`
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 2;
+  flex-shrink: 0;
+  margin: 5px;
+  
+  @media (max-width: 768px) {
+    order: -1;
+  }
   
   &:hover {
     transform: scale(1.1);
@@ -229,6 +240,11 @@ const LocationCard = styled.div<{ isExpanded: boolean; isEven: boolean }>`
   border: 2px solid transparent;
   position: relative;
   z-index: 1;
+  
+  @media (max-width: 768px) {
+    order: 1;
+    max-width: 100%;
+  }
   
   ${props => props.isExpanded && `
     border-color: ${SECONDARY.main};
@@ -296,7 +312,7 @@ const KiteSchoolInfo = styled.div`
   padding: 12px;
   background: ${GRADIENTS.background};
   border-radius: 8px;
-  border-left: 4px solid ${BORDER.accent};
+  border-left: 4px solid ${INTERACTIVE.hover};
 `;
 
 const KiteSchoolLabel = styled.span`
