@@ -25,7 +25,7 @@ const Home = () => {
         title={IntroContent.title}
         content={IntroContent.text}
         button={IntroContent.button}
-        icon="Bakar.png"
+        icon="/Bakar.png"
         id="intro"
       />
       <Services
