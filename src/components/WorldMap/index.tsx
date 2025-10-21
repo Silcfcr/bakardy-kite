@@ -5,157 +5,173 @@ import { TEXT, GRADIENTS, INTERACTIVE, PRIMARY } from "../../styles/colors";
 import { WHATSAPP_CONFIG } from "../../config/constants";
 
 interface Location {
-    id: string;
-    name: string;
-    coordinates: number[];
-    dateRange: string;
-    description: string;
-    image: string;
-    features: string[];
+  id: string;
+  name: string;
+  coordinates: number[];
+  dateRange: string;
+  description: string;
+  image: string;
+  features: string[];
 }
 
 interface WorldMapProps {
-    title: string;
-    subtitle: string;
-    description: string;
-    locations: Location[];
-    id?: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  locations: Location[];
+  id?: string;
 }
 
 const WorldMap: React.FC<WorldMapProps> = ({ title, subtitle, description, locations, id }) => {
-    const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
 
-    const handleMarkerClick = (location: Location) => {
-        setSelectedLocation(location);
-    };
+  const handleMarkerClick = (location: Location) => {
+    setSelectedLocation(location);
+  };
 
-    const handleBookLesson = (location: Location) => {
-        if (location.id === "el-gouna") {
-            // Redirect to Makani booking system for El Gouna
-            window.open("https://makani.kitehub.eu/booking/", "_blank");
-        } else if (location.id === "thailand") {
-            // Redirect to Kite Club Koh Phangan for Thailand
-            window.open("https://kiteclubkohphangan.com/", "_blank");
-        } else {
-            // Use WhatsApp for other locations
-            const message = `Hi! I'd like to book a kitesurf lesson in ${location.name}. ${location.dateRange}`;
-            const whatsappUrl = `https://wa.me/${WHATSAPP_CONFIG.PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
-        }
-    };
+  const handleBookLesson = (location: Location) => {
+    if (location.id === "el-gouna") {
+      // Redirect to Makani booking system for El Gouna
+      window.open("https://makani.kitehub.eu/booking/", "_blank");
+    } else if (location.id === "thailand") {
+      // Redirect to Kite Club Koh Phangan for Thailand
+      window.open("https://kiteclubkohphangan.com/", "_blank");
+    } else {
+      // Use WhatsApp for other locations
+      const message = `Hi! I'd like to book a kitesurf lesson in ${location.name}. ${location.dateRange}`;
+      const whatsappUrl = `https://wa.me/${WHATSAPP_CONFIG.PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+  };
 
-    return (
-        <SectionContainer id={id} data-section={id}>
-            <ContentWrapper>
-                <HeaderSection>
-                    <Title>{title}</Title>
-                    <Subtitle>{subtitle}</Subtitle>
-                    <Description>{description}</Description>
-                </HeaderSection>
+  return (
+    <SectionContainer id={id} data-section={id}>
+      <ContentWrapper>
+        <HeaderSection>
+          <Title>{title}</Title>
+          <Subtitle>{subtitle}</Subtitle>
+          <Description>{description}</Description>
+        </HeaderSection>
 
-                <MapContainer>
-                    <StyledComposableMap
-                        projection="geoMercator"
-                        projectionConfig={{
-                            scale: 140,
-                            center: [0, 20]
-                        }}
-                        width={800}
-                        height={400}
-                    >
-                        <Geographies geography="https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json">
-                            {({ geographies }: { geographies: any[] }) =>
-                                geographies.map((geo: any) => (
-                                    <Geography
-                                        key={geo.rsmKey}
-                                        geography={geo}
-                                        fill="#e8f4f8"
-                                        stroke="#d1e7dd"
-                                        strokeWidth={0.5}
-                                        style={{
-                                            default: {
-                                                fill: "#e8f4f8",
-                                                stroke: "#d1e7dd",
-                                                strokeWidth: 0.5,
-                                                outline: "none",
-                                            },
-                                            hover: {
-                                                fill: "#d1e7dd",
-                                                stroke: "#d1e7dd",
-                                                strokeWidth: 0.5,
-                                                outline: "none",
-                                            },
-                                            pressed: {
-                                                fill: "#d1e7dd",
-                                                stroke: "#d1e7dd",
-                                                strokeWidth: 0.5,
-                                                outline: "none",
-                                            },
-                                        }}
-                                    />
-                                ))
-                            }
-                        </Geographies>
+        <MapContainer>
+          <StyledComposableMap
+            projection="geoMercator"
+            projectionConfig={{
+              scale: window.innerWidth < 768 ? 100 : 140,
+              center: [0, 20]
+            }}
+            width={800}
+            height={400}
+          >
+            <Geographies geography="https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json">
+              {({ geographies }: { geographies: any[] }) =>
+                geographies.map((geo: any) => (
+                  <Geography
+                    key={geo.rsmKey}
+                    geography={geo}
+                    fill="#e8f4f8"
+                    stroke="#d1e7dd"
+                    strokeWidth={0.5}
+                    style={{
+                      default: {
+                        fill: "#e8f4f8",
+                        stroke: "#d1e7dd",
+                        strokeWidth: 0.5,
+                        outline: "none",
+                      },
+                      hover: {
+                        fill: "#d1e7dd",
+                        stroke: "#d1e7dd",
+                        strokeWidth: 0.5,
+                        outline: "none",
+                      },
+                      pressed: {
+                        fill: "#d1e7dd",
+                        stroke: "#d1e7dd",
+                        strokeWidth: 0.5,
+                        outline: "none",
+                      },
+                    }}
+                  />
+                ))
+              }
+            </Geographies>
 
-                        {/* Location markers */}
-                        {locations.map((location) => (
-                            <Marker
-                                key={location.id}
-                                coordinates={location.coordinates as [number, number]}
-                                onClick={() => handleMarkerClick(location)}
-                            >
-                                <MarkerGroup>
-                                    <MarkerCircle
-                                        fill={selectedLocation?.id === location.id ? PRIMARY.main : INTERACTIVE.hover}
-                                        stroke="white"
-                                        strokeWidth={2}
-                                        r={8}
-                                    />
-                                    <MarkerInner
-                                        fill="white"
-                                        r={4}
-                                    />
-                                </MarkerGroup>
-                            </Marker>
-                        ))}
-                    </StyledComposableMap>
+            {/* Location markers */}
+            {locations.map((location) => (
+              <Marker
+                key={location.id}
+                coordinates={location.coordinates as [number, number]}
+                onClick={() => handleMarkerClick(location)}
+              >
+                <MarkerGroup>
+                  <MarkerCircle
+                    fill={selectedLocation?.id === location.id ? PRIMARY.main : INTERACTIVE.hover}
+                    stroke="white"
+                    strokeWidth={2}
+                    r={window.innerWidth < 768 ? 6 : 8}
+                  />
+                  <MarkerInner
+                    fill="white"
+                    r={window.innerWidth < 768 ? 3 : 4}
+                  />
+                </MarkerGroup>
+              </Marker>
+            ))}
+          </StyledComposableMap>
 
-                    {/* Location cards */}
-                    {selectedLocation && (
-                        <LocationCard>
-                            <CloseButton onClick={() => setSelectedLocation(null)}>
-                                ×
-                            </CloseButton>
-                            <CardHeader>
-                                <LocationName>{selectedLocation.name}</LocationName>
-                                <DateRange>{selectedLocation.dateRange}</DateRange>
-                            </CardHeader>
-                            <LocationDescription>{selectedLocation.description}</LocationDescription>
-                            <FeaturesList>
-                                {selectedLocation.features.map((feature, index) => (
-                                    <FeatureItem key={index}>{feature}</FeatureItem>
-                                ))}
-                            </FeaturesList>
-                            <BookButton onClick={() => handleBookLesson(selectedLocation)}>
-                                Book a Lesson
-                            </BookButton>
-                        </LocationCard>
-                    )}
-                </MapContainer>
-            </ContentWrapper>
-        </SectionContainer>
-    );
+          {/* Location cards */}
+          {selectedLocation && (
+            <LocationCard>
+              <CloseButton onClick={() => setSelectedLocation(null)}>
+                ×
+              </CloseButton>
+              <CardHeader>
+                <LocationName>{selectedLocation.name}</LocationName>
+                <DateRange>{selectedLocation.dateRange}</DateRange>
+              </CardHeader>
+              <LocationDescription>{selectedLocation.description}</LocationDescription>
+              <FeaturesList>
+                {selectedLocation.features.map((feature, index) => (
+                  <FeatureItem key={index}>{feature}</FeatureItem>
+                ))}
+              </FeaturesList>
+              <BookButton onClick={() => handleBookLesson(selectedLocation)}>
+                Book a Lesson
+              </BookButton>
+            </LocationCard>
+          )}
+        </MapContainer>
+      </ContentWrapper>
+    </SectionContainer>
+  );
 };
 
 const SectionContainer = styled.section`
   padding: 60px 0;
   background: ${GRADIENTS.background};
+  
+  @media (max-width: 768px) {
+    padding: 40px 0;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 30px 0;
+  }
 `;
 
 const ContentWrapper = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  
+  @media (max-width: 768px) {
+    padding: 0 15px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0 10px;
+  }
 `;
 
 const HeaderSection = styled.div`
@@ -197,6 +213,18 @@ const MapContainer = styled.div`
   margin: 40px 0;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  
+  @media (max-width: 768px) {
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 15px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 12px;
+  }
 `;
 
 const StyledComposableMap = styled(ComposableMap)`
@@ -204,6 +232,16 @@ const StyledComposableMap = styled(ComposableMap)`
   height: 400px;
   border-radius: 12px;
   background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+  
+  @media (max-width: 768px) {
+    height: 300px;
+    border-radius: 8px;
+  }
+  
+  @media (max-width: 480px) {
+    height: 250px;
+    border-radius: 6px;
+  }
 `;
 
 const MarkerGroup = styled.g`
@@ -252,6 +290,12 @@ const LocationCard = styled.div`
     right: auto;
     margin-top: 20px;
     max-width: 100%;
+    padding: 20px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 16px;
+    margin-top: 15px;
   }
 `;
 
