@@ -57,8 +57,8 @@ const WorldMap: React.FC<WorldMapProps> = ({ title, subtitle, description, locat
           <StyledComposableMap
             projection="geoMercator"
             projectionConfig={{
-              scale: window.innerWidth < 768 ? 100 : 140,
-              center: [0, 20]
+              scale: window.innerWidth < 768 ? 180 : 140,
+              center: window.innerWidth < 768 ? [60, 15] : [0, 20]
             }}
             width={800}
             height={400}
@@ -108,12 +108,12 @@ const WorldMap: React.FC<WorldMapProps> = ({ title, subtitle, description, locat
                   <MarkerCircle
                     fill={selectedLocation?.id === location.id ? PRIMARY.main : INTERACTIVE.hover}
                     stroke="white"
-                    strokeWidth={2}
-                    r={window.innerWidth < 768 ? 6 : 8}
+                    strokeWidth={window.innerWidth < 768 ? 3 : 2}
+                    r={window.innerWidth < 768 ? 10 : 8}
                   />
                   <MarkerInner
                     fill="white"
-                    r={window.innerWidth < 768 ? 3 : 4}
+                    r={window.innerWidth < 768 ? 5 : 4}
                   />
                 </MarkerGroup>
               </Marker>
