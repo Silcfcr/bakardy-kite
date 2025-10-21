@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import ServicesContent from "../../content/ServicesContent.json";
-import { BACKGROUND, TEXT, SECONDARY, ACCENT, GRADIENTS, INTERACTIVE } from "../../styles/colors";
+import { TEXT, SECONDARY, ACCENT, GRADIENTS, INTERACTIVE } from "../../styles/colors";
+import { WHATSAPP_CONFIG } from "../../config/constants";
 
 interface Service {
   id: string;
@@ -10,8 +10,6 @@ interface Service {
   duration: string;
   description: string;
   features: string[];
-  price: number;
-  currency: string;
   popular: boolean;
   bookingLink: string;
 }
@@ -28,7 +26,13 @@ const Services: React.FC<ServicesProps> = ({ title, subtitle, description, servi
   const [hoveredService, setHoveredService] = useState<string | null>(null);
 
   const handleBooking = (service: Service) => {
-    if (service.bookingLink) {
+    if (service.bookingLink === "whatsapp") {
+      // Handle WhatsApp booking for Kite Safari
+      const message = `Hello! I'd like to book a Kite Safari adventure with you. ${service.description}`;
+      const whatsappUrl = `https://wa.me/${WHATSAPP_CONFIG.PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    } else if (service.bookingLink) {
+      // Handle other booking links (Makani website, Google Calendar)
       window.open(service.bookingLink, '_blank');
     }
   };
@@ -62,13 +66,6 @@ const Services: React.FC<ServicesProps> = ({ title, subtitle, description, servi
               </ServiceHeader>
 
               <ServiceDescription>{service.description}</ServiceDescription>
-
-              <PriceSection>
-                <Price>
-                  <Currency>{service.currency}</Currency>
-                  <Amount>{service.price}</Amount>
-                </Price>
-              </PriceSection>
 
               <FeaturesList>
                 {service.features.map((feature, index) => (
@@ -137,7 +134,7 @@ const Description = styled.p`
 
 const ServicesGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 30px;
   margin-top: 40px;
   
@@ -228,50 +225,15 @@ const ServiceDescription = styled.p`
   align-items: flex-start;
 `;
 
-const PriceSection = styled.div`
-  text-align: center;
-  margin-bottom: 20px;
-  margin-top: auto;
-  padding: 12px 16px;
-  background: ${GRADIENTS.backgroundAlt};
-  border-radius: 8px;
-  flex-shrink: 0;
-`;
-
-const Price = styled.div`
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 2px;
-`;
-
-const Currency = styled.span`
-  font-size: 1rem;
-  font-weight: 600;
-  color: ${TEXT.secondary};
-`;
-
-const Amount = styled.span`
-  font-size: 2rem;
-  font-weight: 700;
-  color: ${TEXT.primary};
-`;
-
 const FeaturesList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0 0 20px 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   flex: 1;
   min-height: 140px;
-  
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: 8px;
-    min-height: 100px;
-  }
 `;
 
 const FeatureItem = styled.li`

@@ -1,5 +1,5 @@
 {
-    "title": "Services & Pricing",
+    "title": "Services",
     "subtitle": "Choose Your Kitesurfing Adventure",
     "description": "From beginners to advanced riders, I offer personalized kitesurfing experiences tailored to your skill level and goals. All sessions include safety equipment and professional instruction.",
     "services": [
@@ -12,14 +12,10 @@
             "features": [
                 "Safety equipment included",
                 "Personalized instruction",
-                "Equipment setup & breakdown",
-                "Progress tracking",
-                "Photo/video feedback"
+                "Progress tracking"
             ],
-            "price": 89,
-            "currency": "EUR",
             "popular": false,
-            "bookingLink": "https://calendly.com/yourusername/single-lesson"
+            "bookingLink": "https://makani.kitehub.eu/booking/"
         },
         {
             "id": "beginner-course",
@@ -30,34 +26,10 @@
             "features": [
                 "3 full days of instruction",
                 "All safety equipment",
-                "Theory & practical sessions",
-                "Progress certificate",
-                "Follow-up support",
-                "Group discounts available"
+                "Progress certificate"
             ],
-            "price": 249,
-            "currency": "EUR",
             "popular": true,
-            "bookingLink": "https://calendly.com/yourusername/beginner-course"
-        },
-        {
-            "id": "advanced-lesson",
-            "name": "Advanced Lesson",
-            "icon": "🚀",
-            "duration": "2-4 hours",
-            "description": "For experienced riders wanting to master jumps, tricks, or advanced techniques. Customized to your specific goals.",
-            "features": [
-                "Advanced technique focus",
-                "Jump & trick instruction",
-                "Video analysis",
-                "Equipment optimization",
-                "Competition preparation",
-                "Custom training plan"
-            ],
-            "price": 120,
-            "currency": "EUR",
-            "popular": false,
-            "bookingLink": "https://calendly.com/yourusername/advanced-lesson"
+            "bookingLink": "https://makani.kitehub.eu/booking/"
         },
         {
             "id": "remote-coaching",
@@ -68,15 +40,10 @@
             "features": [
                 "Monthly video analysis",
                 "Custom training plans",
-                "Weekly check-ins",
-                "Equipment recommendations",
-                "Progress tracking",
                 "24/7 chat support"
             ],
-            "price": 199,
-            "currency": "EUR",
             "popular": false,
-            "bookingLink": "https://calendly.com/yourusername/remote-coaching"
+            "bookingLink": "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Kitesurf+Remote+Coaching+with+Bakar&dates=20250101T090000Z/20250131T170000Z&details=Personalized+coaching+program+with+video+analysis+and+training+plans&location=Online&add=bakar@bakardykite.com"
         },
         {
             "id": "kite-safari",
@@ -87,16 +54,10 @@
             "features": [
                 "Multiple locations",
                 "Accommodation included",
-                "Transportation provided",
-                "Daily instruction",
-                "Local guide knowledge",
-                "Equipment transport",
-                "Group activities"
+                "Daily instruction"
             ],
-            "price": 899,
-            "currency": "EUR",
             "popular": false,
-            "bookingLink": "https://calendly.com/yourusername/kite-safari"
+            "bookingLink": "whatsapp"
         }
     ]
 }

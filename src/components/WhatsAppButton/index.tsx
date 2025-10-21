@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { ACCENT } from "../../styles/colors";
+import { WHATSAPP_CONFIG } from "../../config/constants";
 
 interface WhatsAppButtonProps {
   phoneNumber: string;
@@ -9,7 +10,7 @@ interface WhatsAppButtonProps {
 
 const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
   phoneNumber,
-  message = "Hello! I'd like to get in touch."
+  message = WHATSAPP_CONFIG.DEFAULT_MESSAGE
 }) => {
   const handleClick = () => {
     const encodedMessage = encodeURIComponent(message);

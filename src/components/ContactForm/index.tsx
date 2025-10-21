@@ -8,6 +8,7 @@ import { Button } from "../../common/Button";
 import Block from "../Block";
 import Input from "../../common/Input";
 import TextArea from "../../common/TextArea";
+import { WHATSAPP_CONFIG } from "../../config/constants";
 import { ContactContainer, FormGroup, Span, ButtonContainer } from "./styles";
 
 const Contact = ({ title, content, button, id, t }: ContactProps) => {
@@ -33,7 +34,7 @@ const Contact = ({ title, content, button, id, t }: ContactProps) => {
                     textColor={btn.textColor}
                     onClick={() => {
                       if (btn.title === "WhatsApp Chat") {
-                        window.open("https://wa.me/201067685898?text=Hello! I'd like to get in touch about your kitesurfing services.", "_blank");
+                        window.open(`https://wa.me/${WHATSAPP_CONFIG.PHONE_NUMBER}?text=${encodeURIComponent(WHATSAPP_CONFIG.DEFAULT_MESSAGE)}`, "_blank");
                       }
                     }}
                   >

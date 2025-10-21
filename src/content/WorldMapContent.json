@@ -1,0 +1,41 @@
+{
+    "title": "Where I'll Be",
+    "subtitle": "My Kitesurfing Schedule Around the World",
+    "description": "Follow my kitesurfing adventures across the globe. Click on the pins to see where I'll be and when you can join me for lessons.",
+    "locations": [
+        {
+            "id": "el-gouna",
+            "name": "El Gouna, Egypt",
+            "coordinates": [
+                33.6780,
+                27.3960
+            ],
+            "dateRange": "📅 October 2025 to December 15th 2025\n📅 February 2026 onwards",
+            "description": "Private kitesurf lessons available in the Red Sea paradise",
+            "image": "/img/el-gouna.jpg",
+            "features": [
+                "Consistent winds",
+                "Warm water year-round",
+                "Beginner-friendly conditions",
+                "Professional instruction"
+            ]
+        },
+        {
+            "id": "thailand",
+            "name": "Koh Phangan, Thailand",
+            "coordinates": [
+                100.5018,
+                13.7563
+            ],
+            "dateRange": "📅 December 15th 2025 to end of February 2026",
+            "description": "Tropical kitesurfing adventures at Kite Club Koh Phangan",
+            "image": "/img/thailand.jpg",
+            "features": [
+                "IKO certified instructors",
+                "Protected lagoon conditions",
+                "Professional equipment",
+                "Beginner to advanced lessons"
+            ]
+        }
+    ]
+}

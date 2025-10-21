@@ -5,6 +5,7 @@ import { withTranslation } from "react-i18next";
 import { ContentBlockProps } from "./types";
 import { Button } from "../../common/Button";
 import { SvgIcon } from "../../common/SvgIcon";
+import { WHATSAPP_CONFIG } from "../../config/constants";
 import {
   ContentSection,
   Content,
@@ -71,7 +72,7 @@ const ContentBlock = ({
                               } else if (item.title === "More Information") {
                                 scrollTo("services");
                               } else if (item.title === "WhatsApp Chat") {
-                                window.open("https://wa.me/201067685898?text=Hello! I'd like to get in touch about your kitesurfing services.", "_blank");
+                                window.open(`https://wa.me/${WHATSAPP_CONFIG.PHONE_NUMBER}?text=${encodeURIComponent(WHATSAPP_CONFIG.DEFAULT_MESSAGE)}`, "_blank");
                               } else {
                                 scrollTo("about");
                               }

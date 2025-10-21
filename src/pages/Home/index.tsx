@@ -1,20 +1,20 @@
 import { lazy } from "react";
 import IntroContent from "../../content/IntroContent.json";
 import ContactContent from "../../content/ContactContent.json";
-import ScheduleContent from "../../content/ScheduleContent.json";
 import ServicesContent from "../../content/ServicesContent.json";
 import HighlightsContent from "../../content/HighlightsContent.json";
 import GalleryContent from "../../content/GalleryContent.json";
+import WorldMapContent from "../../content/WorldMapContent.json";
 
 const Contact = lazy(() => import("../../components/ContactForm"));
 const Container = lazy(() => import("../../common/Container"));
 const ScrollToTop = lazy(() => import("../../common/ScrollToTop"));
 const ContentBlock = lazy(() => import("../../components/ContentBlock"));
 const WhatsAppButton = lazy(() => import("../../components/WhatsAppButton"));
-const Schedule = lazy(() => import("../../components/Schedule"));
 const Services = lazy(() => import("../../components/Services"));
 const Highlights = lazy(() => import("../../components/Highlights"));
 const Gallery = lazy(() => import("../../components/Gallery"));
+const WorldMap = lazy(() => import("../../components/WorldMap/index"));
 
 const Home = () => {
   return (
@@ -41,19 +41,19 @@ const Home = () => {
         posts={GalleryContent.posts}
         id="gallery"
       />
-      <Schedule
-        title={ScheduleContent.title}
-        subtitle={ScheduleContent.subtitle}
-        description={ScheduleContent.description}
-        locations={ScheduleContent.locations}
-        id="schedule"
-      />
       <Highlights
         title={HighlightsContent.title}
         subtitle={HighlightsContent.subtitle}
         description={HighlightsContent.description}
         highlights={HighlightsContent.highlights}
         id="highlights"
+      />
+      <WorldMap
+        title={WorldMapContent.title}
+        subtitle={WorldMapContent.subtitle}
+        description={WorldMapContent.description}
+        locations={WorldMapContent.locations}
+        id="schedule"
       />
       <Contact
         title={ContactContent.title}
