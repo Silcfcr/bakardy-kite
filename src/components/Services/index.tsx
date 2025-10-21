@@ -28,7 +28,7 @@ const Services: React.FC<ServicesProps> = ({ title, subtitle, description, servi
   const handleBooking = (service: Service) => {
     if (service.bookingLink === "whatsapp") {
       // Handle WhatsApp booking for Kite Safari
-      const message = `Hello! I'd like to book a Kite Safari adventure with you. ${service.description}`;
+      const message = `Hello Bakar! I'm interested in a Kite Safari adventure. My dates are...`;
       const whatsappUrl = `https://wa.me/${WHATSAPP_CONFIG.PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
     } else if (service.bookingLink) {

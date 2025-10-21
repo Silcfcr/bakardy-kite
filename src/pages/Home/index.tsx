@@ -5,6 +5,7 @@ import ServicesContent from "../../content/ServicesContent.json";
 import HighlightsContent from "../../content/HighlightsContent.json";
 import GalleryContent from "../../content/GalleryContent.json";
 import WorldMapContent from "../../content/WorldMapContent.json";
+import { WHATSAPP_CONFIG } from "../../config/constants";
 
 const Contact = lazy(() => import("../../components/ContactForm"));
 const Container = lazy(() => import("../../common/Container"));
@@ -62,8 +63,8 @@ const Home = () => {
         id="contact"
       />
       <WhatsAppButton
-        phoneNumber="201067685898"
-        message="Hello! I'd like to get in touch about your services."
+        phoneNumber={WHATSAPP_CONFIG.PHONE_NUMBER}
+        message={WHATSAPP_CONFIG.DEFAULT_MESSAGE}
       />
     </Container>
   );
