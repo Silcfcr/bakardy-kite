@@ -4,167 +4,167 @@ import { supabase } from '../../config/supabase';
 import { TEXT, PRIMARY, GRADIENTS, INTERACTIVE } from '../../styles/colors';
 
 interface ReviewFormProps {
-    onReviewSubmitted?: () => void;
+  onReviewSubmitted?: () => void;
 }
 
 const ReviewForm: React.FC<ReviewFormProps> = ({ onReviewSubmitted }) => {
-    const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({
+    name: '',
+    rating: 5,
+    comment: '',
+    location: '',
+    date: new Date().toISOString().split('T')[0]
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: name === 'rating' ? parseInt(value) : value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError('');
+
+    try {
+      const { error } = await supabase
+        .from('reviews')
+        .insert([{
+          name: formData.name,
+          rating: formData.rating,
+          comment: formData.comment,
+          location: formData.location,
+          date: formData.date,
+          approved: true // Default to approved for immediate display
+        }]);
+
+      if (error) {
+        throw error;
+      }
+
+      setIsSubmitted(true);
+      setFormData({
         name: '',
         rating: 5,
         comment: '',
         location: '',
         date: new Date().toISOString().split('T')[0]
-    });
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isSubmitted, setIsSubmitted] = useState(false);
-    const [error, setError] = useState('');
+      });
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: name === 'rating' ? parseInt(value) : value
-        }));
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsSubmitting(true);
-        setError('');
-
-        try {
-            const { error } = await supabase
-                .from('reviews')
-                .insert([{
-                    name: formData.name,
-                    rating: formData.rating,
-                    comment: formData.comment,
-                    location: formData.location,
-                    date: formData.date,
-                    approved: false // Reviews need approval
-                }]);
-
-            if (error) {
-                throw error;
-            }
-
-            setIsSubmitted(true);
-            setFormData({
-                name: '',
-                rating: 5,
-                comment: '',
-                location: '',
-                date: new Date().toISOString().split('T')[0]
-            });
-
-            if (onReviewSubmitted) {
-                onReviewSubmitted();
-            }
-        } catch (error: any) {
-            setError(error.message || 'Failed to submit review');
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
-
-    const renderStars = (rating: number, interactive: boolean = false) => {
-        return Array.from({ length: 5 }, (_, index) => (
-            <Star
-                key={index}
-                filled={index < rating}
-                interactive={interactive}
-                onClick={() => interactive && setFormData(prev => ({ ...prev, rating: index + 1 }))}
-            >
-                ★
-            </Star>
-        ));
-    };
-
-    if (isSubmitted) {
-        return (
-            <FormContainer>
-                <SuccessMessage>
-                    <SuccessIcon>✓</SuccessIcon>
-                    <SuccessTitle>Thank you for your review!</SuccessTitle>
-                    <SuccessText>
-                        Your review has been submitted and will be published after approval.
-                    </SuccessText>
-                </SuccessMessage>
-            </FormContainer>
-        );
+      if (onReviewSubmitted) {
+        onReviewSubmitted();
+      }
+    } catch (error: any) {
+      setError(error.message || 'Failed to submit review');
+    } finally {
+      setIsSubmitting(false);
     }
+  };
 
+  const renderStars = (rating: number, interactive: boolean = false) => {
+    return Array.from({ length: 5 }, (_, index) => (
+      <Star
+        key={index}
+        filled={index < rating}
+        interactive={interactive}
+        onClick={() => interactive && setFormData(prev => ({ ...prev, rating: index + 1 }))}
+      >
+        ★
+      </Star>
+    ));
+  };
+
+  if (isSubmitted) {
     return (
-        <FormContainer>
-            <FormTitle>Share Your Experience</FormTitle>
-            <FormSubtitle>Help others discover great kitesurfing lessons</FormSubtitle>
-
-            <Form onSubmit={handleSubmit}>
-                <FormGroup>
-                    <Label htmlFor="name">Your Name *</Label>
-                    <Input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        required
-                        placeholder="Enter your name"
-                    />
-                </FormGroup>
-
-                <FormGroup>
-                    <Label htmlFor="location">Location</Label>
-                    <Input
-                        type="text"
-                        id="location"
-                        name="location"
-                        value={formData.location}
-                        onChange={handleInputChange}
-                        placeholder="Where did you take the lesson? (e.g., El Gouna, Egypt)"
-                    />
-                </FormGroup>
-
-                <FormGroup>
-                    <Label htmlFor="date">Date of Lesson</Label>
-                    <Input
-                        type="date"
-                        id="date"
-                        name="date"
-                        value={formData.date}
-                        onChange={handleInputChange}
-                    />
-                </FormGroup>
-
-                <FormGroup>
-                    <Label>Rating *</Label>
-                    <StarContainer>
-                        {renderStars(formData.rating, true)}
-                        <RatingText>{formData.rating} star{formData.rating !== 1 ? 's' : ''}</RatingText>
-                    </StarContainer>
-                </FormGroup>
-
-                <FormGroup>
-                    <Label htmlFor="comment">Your Review *</Label>
-                    <TextArea
-                        id="comment"
-                        name="comment"
-                        value={formData.comment}
-                        onChange={handleInputChange}
-                        required
-                        placeholder="Tell us about your experience with Bakar's kitesurfing lessons..."
-                        rows={4}
-                    />
-                </FormGroup>
-
-                {error && <ErrorMessage>{error}</ErrorMessage>}
-
-                <SubmitButton type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? 'Submitting...' : 'Submit Review'}
-                </SubmitButton>
-            </Form>
-        </FormContainer>
+      <FormContainer>
+        <SuccessMessage>
+          <SuccessIcon>✓</SuccessIcon>
+          <SuccessTitle>Thank you for your review!</SuccessTitle>
+          <SuccessText>
+            Your review has been submitted and will be published after approval.
+          </SuccessText>
+        </SuccessMessage>
+      </FormContainer>
     );
+  }
+
+  return (
+    <FormContainer>
+      <FormTitle>Share Your Experience</FormTitle>
+      <FormSubtitle>Help others discover great kitesurfing lessons</FormSubtitle>
+
+      <Form onSubmit={handleSubmit}>
+        <FormGroup>
+          <Label htmlFor="name">Your Name *</Label>
+          <Input
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+            required
+            placeholder="Enter your name"
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Label htmlFor="location">Location</Label>
+          <Input
+            type="text"
+            id="location"
+            name="location"
+            value={formData.location}
+            onChange={handleInputChange}
+            placeholder="Where did you take the lesson? (e.g., El Gouna, Egypt)"
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Label htmlFor="date">Date of Lesson</Label>
+          <Input
+            type="date"
+            id="date"
+            name="date"
+            value={formData.date}
+            onChange={handleInputChange}
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Label>Rating *</Label>
+          <StarContainer>
+            {renderStars(formData.rating, true)}
+            <RatingText>{formData.rating} star{formData.rating !== 1 ? 's' : ''}</RatingText>
+          </StarContainer>
+        </FormGroup>
+
+        <FormGroup>
+          <Label htmlFor="comment">Your Review *</Label>
+          <TextArea
+            id="comment"
+            name="comment"
+            value={formData.comment}
+            onChange={handleInputChange}
+            required
+            placeholder="Tell us about your experience with Bakar's kitesurfing lessons..."
+            rows={4}
+          />
+        </FormGroup>
+
+        {error && <ErrorMessage>{error}</ErrorMessage>}
+
+        <SubmitButton type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Submitting...' : 'Submit Review'}
+        </SubmitButton>
+      </Form>
+    </FormContainer>
+  );
 };
 
 const FormContainer = styled.div`

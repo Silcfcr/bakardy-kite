@@ -2,124 +2,106 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { supabase, Review } from '../../config/supabase';
 import { TEXT, GRADIENTS } from '../../styles/colors';
-import ReviewForm from '../ReviewForm';
 
 interface ReviewsProps {
-    title: string;
-    subtitle: string;
-    description: string;
-    id?: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  id?: string;
 }
 
 const Reviews: React.FC<ReviewsProps> = ({ title, subtitle, description, id }) => {
-    const [reviews, setReviews] = useState<Review[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [showForm, setShowForm] = useState(false);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        fetchReviews();
-    }, []);
+  useEffect(() => {
+    fetchReviews();
+  }, []);
 
-    const fetchReviews = async () => {
-        try {
-            const { data, error } = await supabase
-                .from('reviews')
-                .select('*')
-                .eq('approved', true)
-                .order('created_at', { ascending: false })
-                .limit(6);
+  const fetchReviews = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('reviews')
+        .select('*')
+        .eq('approved', true)
+        .order('created_at', { ascending: false });
 
-            if (error) {
-                console.error('Error fetching reviews:', error);
-            } else {
-                setReviews(data || []);
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleReviewSubmitted = () => {
-        setShowForm(false);
-        // Optionally refresh reviews
-        fetchReviews();
-    };
-
-    const renderStars = (rating: number) => {
-        return Array.from({ length: 5 }, (_, index) => (
-            <Star key={index} filled={index < rating}>
-                ★
-            </Star>
-        ));
-    };
-
-    const formatDate = (dateString: string) => {
-        return new Date(dateString).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-    };
-
-    if (loading) {
-        return (
-            <SectionContainer id={id} data-section={id}>
-                <ContentWrapper>
-                    <HeaderSection>
-                        <Title>{title}</Title>
-                        <Subtitle>{subtitle}</Subtitle>
-                        <Description>{description}</Description>
-                    </HeaderSection>
-                    <LoadingMessage>Loading reviews...</LoadingMessage>
-                </ContentWrapper>
-            </SectionContainer>
-        );
+      if (error) {
+        console.error('Error fetching reviews:', error);
+      } else {
+        setReviews(data || []);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setLoading(false);
     }
+  };
 
+  const renderStars = (rating: number) => {
+    return Array.from({ length: 5 }, (_, index) => (
+      <Star key={index} filled={index < rating}>
+        ★
+      </Star>
+    ));
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  if (loading) {
     return (
-        <SectionContainer id={id} data-section={id}>
-            <ContentWrapper>
-                <HeaderSection>
-                    <Title>{title}</Title>
-                    <Subtitle>{subtitle}</Subtitle>
-                    <Description>{description}</Description>
-                    <FormButton onClick={() => setShowForm(!showForm)}>
-                        {showForm ? 'Hide Form' : 'Write a Review'}
-                    </FormButton>
-                </HeaderSection>
-
-                {showForm && (
-                    <FormSection>
-                        <ReviewForm onReviewSubmitted={handleReviewSubmitted} />
-                    </FormSection>
-                )}
-
-                {reviews.length === 0 ? (
-                    <NoReviewsMessage>
-                        No reviews yet. Be the first to share your experience!
-                    </NoReviewsMessage>
-                ) : (
-                    <ReviewsGrid>
-                        {reviews.map((review) => (
-                            <ReviewCard key={review.id}>
-                                <ReviewHeader>
-                                    <ReviewerName>{review.name}</ReviewerName>
-                                    <ReviewLocation>{review.location}</ReviewLocation>
-                                </ReviewHeader>
-                                <StarRating>
-                                    {renderStars(review.rating)}
-                                </StarRating>
-                                <ReviewComment>{review.comment}</ReviewComment>
-                                <ReviewDate>{formatDate(review.date)}</ReviewDate>
-                            </ReviewCard>
-                        ))}
-                    </ReviewsGrid>
-                )}
-            </ContentWrapper>
-        </SectionContainer>
+      <SectionContainer id={id} data-section={id}>
+        <ContentWrapper>
+          <HeaderSection>
+            <Title>{title}</Title>
+            <Subtitle>{subtitle}</Subtitle>
+            <Description>{description}</Description>
+          </HeaderSection>
+          <LoadingMessage>Loading reviews...</LoadingMessage>
+        </ContentWrapper>
+      </SectionContainer>
     );
+  }
+
+  return (
+    <SectionContainer id={id} data-section={id}>
+      <ContentWrapper>
+        <HeaderSection>
+          <Title>{title}</Title>
+          <Subtitle>{subtitle}</Subtitle>
+          <Description>{description}</Description>
+        </HeaderSection>
+
+        {reviews.length === 0 ? (
+          <NoReviewsMessage>
+            No reviews yet. Be the first to share your experience!
+          </NoReviewsMessage>
+        ) : (
+          <ReviewsGrid>
+            {reviews.map((review) => (
+              <ReviewCard key={review.id}>
+                <ReviewHeader>
+                  <ReviewerName>{review.name}</ReviewerName>
+                  <ReviewLocation>{review.location}</ReviewLocation>
+                </ReviewHeader>
+                <StarRating>
+                  {renderStars(review.rating)}
+                </StarRating>
+                <ReviewComment>{review.comment}</ReviewComment>
+                <ReviewDate>{formatDate(review.date)}</ReviewDate>
+              </ReviewCard>
+            ))}
+          </ReviewsGrid>
+        )}
+      </ContentWrapper>
+    </SectionContainer>
+  );
 };
 
 const SectionContainer = styled.section`
@@ -255,29 +237,6 @@ const NoReviewsMessage = styled.div`
   background: white;
   border-radius: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-`;
-
-const FormButton = styled.button`
-  background: ${GRADIENTS.primary};
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 20px;
-  
-  &:hover {
-    background: #2c5aa0;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(49, 130, 206, 0.3);
-  }
-`;
-
-const FormSection = styled.div`
-  margin: 40px 0;
 `;
 
 export default Reviews;
