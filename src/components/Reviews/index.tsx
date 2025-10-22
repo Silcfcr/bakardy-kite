@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { supabase, Review } from '../../config/supabase';
 import { TEXT, GRADIENTS } from '../../styles/colors';
+import ReviewForm from '../ReviewForm';
 
 interface ReviewsProps {
   title: string;
@@ -13,6 +14,7 @@ interface ReviewsProps {
 const Reviews: React.FC<ReviewsProps> = ({ title, subtitle, description, id }) => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     fetchReviews();
@@ -36,6 +38,11 @@ const Reviews: React.FC<ReviewsProps> = ({ title, subtitle, description, id }) =
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleReviewSubmitted = () => {
+    setShowForm(false);
+    fetchReviews();
   };
 
   const renderStars = (rating: number) => {
@@ -76,7 +83,16 @@ const Reviews: React.FC<ReviewsProps> = ({ title, subtitle, description, id }) =
           <Title>{title}</Title>
           <Subtitle>{subtitle}</Subtitle>
           <Description>{description}</Description>
+          <FormButton onClick={() => setShowForm(!showForm)}>
+            {showForm ? 'Hide Form' : 'Write a Review'}
+          </FormButton>
         </HeaderSection>
+
+        {showForm && (
+          <FormSection>
+            <ReviewForm onReviewSubmitted={handleReviewSubmitted} />
+          </FormSection>
+        )}
 
         {reviews.length === 0 ? (
           <NoReviewsMessage>
@@ -237,6 +253,29 @@ const NoReviewsMessage = styled.div`
   background: white;
   border-radius: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+`;
+
+const FormButton = styled.button`
+  background: ${GRADIENTS.primary};
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+  
+  &:hover {
+    background: #2c5aa0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(49, 130, 206, 0.3);
+  }
+`;
+
+const FormSection = styled.div`
+  margin: 40px 0;
 `;
 
 export default Reviews;
