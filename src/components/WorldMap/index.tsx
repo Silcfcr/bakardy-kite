@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps";
 import { TEXT, GRADIENTS, INTERACTIVE, PRIMARY } from "../../styles/colors";
@@ -24,6 +24,15 @@ interface WorldMapProps {
 
 const WorldMap: React.FC<WorldMapProps> = ({ title, subtitle, description, locations, id }) => {
   const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
+
+  // Defer map loading to improve initial render
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsMapLoaded(true);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleMarkerClick = (location: Location) => {
     setSelectedLocation(location);
@@ -54,71 +63,77 @@ const WorldMap: React.FC<WorldMapProps> = ({ title, subtitle, description, locat
         </HeaderSection>
 
         <MapContainer>
-          <StyledComposableMap
-            projection="geoMercator"
-            projectionConfig={{
-              scale: window.innerWidth < 768 ? 180 : 140,
-              center: window.innerWidth < 768 ? [60, 15] : [0, 20]
-            }}
-            width={800}
-            height={400}
-          >
-            <Geographies geography="https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json">
-              {({ geographies }: { geographies: any[] }) =>
-                geographies.map((geo: any) => (
-                  <Geography
-                    key={geo.rsmKey}
-                    geography={geo}
-                    fill="#e8f4f8"
-                    stroke="#d1e7dd"
-                    strokeWidth={0.5}
-                    style={{
-                      default: {
-                        fill: "#e8f4f8",
-                        stroke: "#d1e7dd",
-                        strokeWidth: 0.5,
-                        outline: "none",
-                      },
-                      hover: {
-                        fill: "#d1e7dd",
-                        stroke: "#d1e7dd",
-                        strokeWidth: 0.5,
-                        outline: "none",
-                      },
-                      pressed: {
-                        fill: "#d1e7dd",
-                        stroke: "#d1e7dd",
-                        strokeWidth: 0.5,
-                        outline: "none",
-                      },
-                    }}
-                  />
-                ))
-              }
-            </Geographies>
+          {!isMapLoaded ? (
+            <MapPlaceholder>
+              <div>Loading interactive map...</div>
+            </MapPlaceholder>
+          ) : (
+            <StyledComposableMap
+              projection="geoMercator"
+              projectionConfig={{
+                scale: window.innerWidth < 768 ? 180 : 140,
+                center: window.innerWidth < 768 ? [60, 15] : [0, 20]
+              }}
+              width={800}
+              height={400}
+            >
+              <Geographies geography="https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json">
+                {({ geographies }: { geographies: any[] }) =>
+                  geographies.map((geo: any) => (
+                    <Geography
+                      key={geo.rsmKey}
+                      geography={geo}
+                      fill="#e8f4f8"
+                      stroke="#d1e7dd"
+                      strokeWidth={0.5}
+                      style={{
+                        default: {
+                          fill: "#e8f4f8",
+                          stroke: "#d1e7dd",
+                          strokeWidth: 0.5,
+                          outline: "none",
+                        },
+                        hover: {
+                          fill: "#d1e7dd",
+                          stroke: "#d1e7dd",
+                          strokeWidth: 0.5,
+                          outline: "none",
+                        },
+                        pressed: {
+                          fill: "#d1e7dd",
+                          stroke: "#d1e7dd",
+                          strokeWidth: 0.5,
+                          outline: "none",
+                        },
+                      }}
+                    />
+                  ))
+                }
+              </Geographies>
 
-            {/* Location markers */}
-            {locations.map((location) => (
-              <Marker
-                key={location.id}
-                coordinates={location.coordinates as [number, number]}
-                onClick={() => handleMarkerClick(location)}
-              >
-                <MarkerGroup>
-                  <MarkerCircle
-                    fill={selectedLocation?.id === location.id ? PRIMARY.main : INTERACTIVE.hover}
-                    stroke="white"
-                    strokeWidth={window.innerWidth < 768 ? 3 : 2}
-                    r={window.innerWidth < 768 ? 10 : 8}
-                  />
-                  <MarkerInner
-                    fill="white"
-                    r={window.innerWidth < 768 ? 5 : 4}
-                  />
-                </MarkerGroup>
-              </Marker>
-            ))}
-          </StyledComposableMap>
+              {/* Location markers */}
+              {locations.map((location) => (
+                <Marker
+                  key={location.id}
+                  coordinates={location.coordinates as [number, number]}
+                  onClick={() => handleMarkerClick(location)}
+                >
+                  <MarkerGroup>
+                    <MarkerCircle
+                      fill={selectedLocation?.id === location.id ? PRIMARY.main : INTERACTIVE.hover}
+                      stroke="white"
+                      strokeWidth={window.innerWidth < 768 ? 3 : 2}
+                      r={window.innerWidth < 768 ? 10 : 8}
+                    />
+                    <MarkerInner
+                      fill="white"
+                      r={window.innerWidth < 768 ? 5 : 4}
+                    />
+                  </MarkerGroup>
+                </Marker>
+              ))}
+            </StyledComposableMap>
+          )}
 
           {/* Location cards */}
           {selectedLocation && (
@@ -241,6 +256,31 @@ const StyledComposableMap = styled(ComposableMap)`
   @media (max-width: 480px) {
     height: 250px;
     border-radius: 6px;
+  }
+`;
+
+const MapPlaceholder = styled.div`
+  width: 100%;
+  height: 400px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  
+  @media (max-width: 768px) {
+    height: 300px;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    height: 250px;
+    border-radius: 6px;
+    font-size: 0.9rem;
   }
 `;
 

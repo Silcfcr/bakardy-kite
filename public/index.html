@@ -25,6 +25,15 @@
   <meta property="twitter:description"
     content="Professional kitesurfing lessons with Bakardy Kite. IKO certified instructor offering personalized teaching in El Gouna and worldwide locations." />
   <meta property="twitter:site" content="https://bakardykite.com/" />
+
+  <!-- Preload critical resources -->
+  <link rel="preload" href="%PUBLIC_URL%/Bakar.png" as="image" type="image/png" />
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json" as="fetch" crossorigin />
+
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="preconnect" href="https://wa.me" />
+
   <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.

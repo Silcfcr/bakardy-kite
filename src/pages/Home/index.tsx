@@ -1,4 +1,4 @@
-import { lazy } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import IntroContent from "../../content/IntroContent.json";
 import ContactContent from "../../content/ContactContent.json";
 import ServicesContent from "../../content/ServicesContent.json";
@@ -7,17 +7,36 @@ import GalleryContent from "../../content/GalleryContent.json";
 import WorldMapContent from "../../content/WorldMapContent.json";
 import { WHATSAPP_CONFIG } from "../../config/constants";
 
+// Critical components - load immediately
+import Container from "../../common/Container";
+import ScrollToTop from "../../common/ScrollToTop";
+import ContentBlock from "../../components/ContentBlock";
+
+// Non-critical components - lazy load with preloading
 const Contact = lazy(() => import("../../components/ContactForm"));
-const Container = lazy(() => import("../../common/Container"));
-const ScrollToTop = lazy(() => import("../../common/ScrollToTop"));
-const ContentBlock = lazy(() => import("../../components/ContentBlock"));
 const WhatsAppButton = lazy(() => import("../../components/WhatsAppButton"));
 const Services = lazy(() => import("../../components/Services"));
 const Highlights = lazy(() => import("../../components/Highlights"));
 const Gallery = lazy(() => import("../../components/Gallery"));
 const WorldMap = lazy(() => import("../../components/WorldMap/index"));
 
+// Preload non-critical components after initial render
+const preloadComponents = () => {
+  import("../../components/ContactForm");
+  import("../../components/WhatsAppButton");
+  import("../../components/Services");
+  import("../../components/Highlights");
+  import("../../components/Gallery");
+  import("../../components/WorldMap/index");
+};
+
 const Home = () => {
+  // Preload components after initial render
+  useEffect(() => {
+    const timer = setTimeout(preloadComponents, 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <Container>
       <ScrollToTop />
@@ -29,43 +48,55 @@ const Home = () => {
         icon="/Bakar.png"
         id="intro"
       />
-      <Services
-        title={ServicesContent.title}
-        subtitle={ServicesContent.subtitle}
-        description={ServicesContent.description}
-        services={ServicesContent.services}
-        id="services"
-      />
-      <Gallery
-        instagramHandle={GalleryContent.instagramHandle}
-        instagramLink={GalleryContent.instagramLink}
-        posts={GalleryContent.posts}
-        id="gallery"
-      />
-      <Highlights
-        title={HighlightsContent.title}
-        subtitle={HighlightsContent.subtitle}
-        description={HighlightsContent.description}
-        highlights={HighlightsContent.highlights}
-        id="highlights"
-      />
-      <WorldMap
-        title={WorldMapContent.title}
-        subtitle={WorldMapContent.subtitle}
-        description={WorldMapContent.description}
-        locations={WorldMapContent.locations}
-        id="schedule"
-      />
-      <Contact
-        title={ContactContent.title}
-        content={ContactContent.text}
-        button={ContactContent.button}
-        id="contact"
-      />
-      <WhatsAppButton
-        phoneNumber={WHATSAPP_CONFIG.PHONE_NUMBER}
-        message={WHATSAPP_CONFIG.DEFAULT_MESSAGE}
-      />
+      <Suspense fallback={<div style={{ height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>}>
+        <Services
+          title={ServicesContent.title}
+          subtitle={ServicesContent.subtitle}
+          description={ServicesContent.description}
+          services={ServicesContent.services}
+          id="services"
+        />
+      </Suspense>
+      <Suspense fallback={<div style={{ height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>}>
+        <Gallery
+          instagramHandle={GalleryContent.instagramHandle}
+          instagramLink={GalleryContent.instagramLink}
+          posts={GalleryContent.posts}
+          id="gallery"
+        />
+      </Suspense>
+      <Suspense fallback={<div style={{ height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>}>
+        <Highlights
+          title={HighlightsContent.title}
+          subtitle={HighlightsContent.subtitle}
+          description={HighlightsContent.description}
+          highlights={HighlightsContent.highlights}
+          id="highlights"
+        />
+      </Suspense>
+      <Suspense fallback={<div style={{ height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>}>
+        <WorldMap
+          title={WorldMapContent.title}
+          subtitle={WorldMapContent.subtitle}
+          description={WorldMapContent.description}
+          locations={WorldMapContent.locations}
+          id="schedule"
+        />
+      </Suspense>
+      <Suspense fallback={<div style={{ height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>}>
+        <Contact
+          title={ContactContent.title}
+          content={ContactContent.text}
+          button={ContactContent.button}
+          id="contact"
+        />
+      </Suspense>
+      <Suspense fallback={null}>
+        <WhatsAppButton
+          phoneNumber={WHATSAPP_CONFIG.PHONE_NUMBER}
+          message={WHATSAPP_CONFIG.DEFAULT_MESSAGE}
+        />
+      </Suspense>
     </Container>
   );
 };
