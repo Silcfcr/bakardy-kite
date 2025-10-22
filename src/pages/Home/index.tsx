@@ -5,6 +5,7 @@ import ServicesContent from "../../content/ServicesContent.json";
 import HighlightsContent from "../../content/HighlightsContent.json";
 import GalleryContent from "../../content/GalleryContent.json";
 import WorldMapContent from "../../content/WorldMapContent.json";
+import ReviewsContent from "../../content/ReviewsContent.json";
 import { WHATSAPP_CONFIG } from "../../config/constants";
 
 // Critical components - load immediately
@@ -19,6 +20,7 @@ const Services = lazy(() => import("../../components/Services"));
 const Highlights = lazy(() => import("../../components/Highlights"));
 const Gallery = lazy(() => import("../../components/Gallery"));
 const WorldMap = lazy(() => import("../../components/WorldMap/index"));
+const Reviews = lazy(() => import("../../components/Reviews"));
 
 // Preload non-critical components after initial render
 const preloadComponents = () => {
@@ -28,6 +30,7 @@ const preloadComponents = () => {
   import("../../components/Highlights");
   import("../../components/Gallery");
   import("../../components/WorldMap/index");
+  import("../../components/Reviews");
 };
 
 const Home = () => {
@@ -45,7 +48,7 @@ const Home = () => {
         title={IntroContent.title}
         content={IntroContent.text}
         button={IntroContent.button}
-        icon="/Bakar.png"
+        icon="/img/Bakar.jpeg"
         id="intro"
       />
       <Suspense fallback={<div style={{ height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>}>
@@ -81,6 +84,14 @@ const Home = () => {
           description={WorldMapContent.description}
           locations={WorldMapContent.locations}
           id="schedule"
+        />
+      </Suspense>
+      <Suspense fallback={<div style={{ height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>}>
+        <Reviews
+          title={ReviewsContent.title}
+          subtitle={ReviewsContent.subtitle}
+          description={ReviewsContent.description}
+          id="reviews"
         />
       </Suspense>
       <Suspense fallback={<div style={{ height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>}>

@@ -4,55 +4,55 @@
     "posts": [
         {
             "id": "2",
-            "imageUrl": "/Bakar2.jpeg",
+            "imageUrl": "/img/Bakar2.jpeg",
             "caption": "Blue skies and steady winds",
             "postUrl": "https://www.instagram.com/p/EXAMPLE2/"
         },
         {
             "id": "3",
-            "imageUrl": "/Bakar3.jpeg",
+            "imageUrl": "/img/Bakar3.jpeg",
             "caption": "Advanced tricks in action",
             "postUrl": "https://www.instagram.com/p/EXAMPLE3/"
         },
         {
             "id": "4",
-            "imageUrl": "/Bakar4.jpeg",
+            "imageUrl": "/img/Bakar4.jpeg",
             "caption": "Equipment preparation",
             "postUrl": "https://www.instagram.com/p/EXAMPLE4/"
         },
         {
             "id": "5",
-            "imageUrl": "/Bakar5.jpeg",
+            "imageUrl": "/img/Bakar5.jpeg",
             "caption": "Beginner progress",
             "postUrl": "https://www.instagram.com/p/EXAMPLE5/"
         },
         {
             "id": "6",
-            "imageUrl": "/Bakar6.jpeg",
+            "imageUrl": "/img/Bakar6.jpeg",
             "caption": "Golden hour sessions",
             "postUrl": "https://www.instagram.com/p/EXAMPLE6/"
         },
         {
             "id": "7",
-            "imageUrl": "/Bakar7.jpeg",
+            "imageUrl": "/img/Bakar7.jpeg",
             "caption": "Professional instruction",
             "postUrl": "https://www.instagram.com/p/EXAMPLE7/"
         },
         {
             "id": "8",
-            "imageUrl": "/Bakar8.jpeg",
+            "imageUrl": "/img/Bakar8.jpeg",
             "caption": "Safety first approach",
             "postUrl": "https://www.instagram.com/p/EXAMPLE8/"
         },
         {
             "id": "9",
-            "imageUrl": "/Bakar9.jpeg",
+            "imageUrl": "/img/Bakar9.jpeg",
             "caption": "Amazing kitesurfing moments",
             "postUrl": "https://www.instagram.com/p/EXAMPLE9/"
         },
         {
             "id": "10",
-            "imageUrl": "/Bakar10.jpeg",
+            "imageUrl": "/img/Bakar10.jpeg",
             "caption": "Join us for the adventure",
             "postUrl": "https://www.instagram.com/p/EXAMPLE10/"
         }

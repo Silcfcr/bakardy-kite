@@ -39,7 +39,7 @@ const ContentBlock = ({
       <Fade direction={direction} triggerOnce>
         <StyledRow
           justify="space-between"
-          align="middle"
+          align="top"
           id={id}
           data-section={id}
           direction={direction}
