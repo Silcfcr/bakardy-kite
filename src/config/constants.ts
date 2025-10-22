@@ -6,6 +6,6 @@ export const WHATSAPP_CONFIG = {
 
 // Contact Information
 export const CONTACT_INFO = {
-    PHONE: "+201067685898",
-    EMAIL: "info@bakardykite.com" // Add your email if needed
+    PHONE: "201067685898",
+    EMAIL: "alaswanybakar2@gmail.com" // Add your email if needed
 };

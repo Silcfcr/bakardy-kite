@@ -19,12 +19,12 @@ publicKey: 'YOUR_ACTUAL_PUBLIC_KEY'
 
 ### 3. That's It!
 - The template ID is already set to use the default "Contact Us" template
-- All emails will be sent to `silcf.cr@gmail.com`
+- All emails will be sent to `alaswanybakar2@gmail.com`
 - The form will automatically work once you add your Service ID and Public Key
 
 ### What Happens When Form is Submitted:
 - User's name, email, and message are sent via EmailJS
-- Email is delivered to `silcf.cr@gmail.com`
+- Email is delivered to `alaswanybakar2@gmail.com`
 - Form resets automatically
 - User gets success/error notifications
 

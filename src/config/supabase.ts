@@ -16,6 +16,7 @@ export interface Review {
     rating: number
     comment: string
     location: string
+    countrycode: string
     date: string
     created_at: string
     approved: boolean

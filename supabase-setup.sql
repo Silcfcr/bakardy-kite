@@ -33,3 +33,6 @@ CREATE POLICY "Public can view approved reviews" ON reviews
 -- Create policy for inserting new reviews (for future form submissions)
 CREATE POLICY "Anyone can insert reviews" ON reviews
   FOR INSERT WITH CHECK (true);
+
+  ALTER TABLE public.reviews 
+ADD COLUMN countryCode TEXT;

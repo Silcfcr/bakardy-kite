@@ -61,6 +61,46 @@ const Reviews: React.FC<ReviewsProps> = ({ title, subtitle, description, id }) =
     });
   };
 
+  const getCountryName = (countryCode: string) => {
+    const countryMap: { [key: string]: string } = {
+      'AF': 'Afghanistan', 'AL': 'Albania', 'DZ': 'Algeria', 'AR': 'Argentina', 'AU': 'Australia',
+      'AT': 'Austria', 'BD': 'Bangladesh', 'BE': 'Belgium', 'BR': 'Brazil', 'BG': 'Bulgaria',
+      'CA': 'Canada', 'CL': 'Chile', 'CN': 'China', 'CO': 'Colombia', 'CR': 'Costa Rica',
+      'HR': 'Croatia', 'CZ': 'Czech Republic', 'DK': 'Denmark', 'EG': 'Egypt', 'FI': 'Finland',
+      'FR': 'France', 'DE': 'Germany', 'GR': 'Greece', 'GT': 'Guatemala', 'HU': 'Hungary',
+      'IS': 'Iceland', 'IN': 'India', 'ID': 'Indonesia', 'IE': 'Ireland', 'IL': 'Israel',
+      'IT': 'Italy', 'JP': 'Japan', 'KE': 'Kenya', 'KR': 'South Korea', 'LV': 'Latvia',
+      'LT': 'Lithuania', 'LU': 'Luxembourg', 'MY': 'Malaysia', 'MX': 'Mexico', 'NL': 'Netherlands',
+      'NZ': 'New Zealand', 'NO': 'Norway', 'PK': 'Pakistan', 'PE': 'Peru', 'PH': 'Philippines',
+      'PL': 'Poland', 'PT': 'Portugal', 'RO': 'Romania', 'RU': 'Russia', 'SA': 'Saudi Arabia',
+      'SG': 'Singapore', 'SK': 'Slovakia', 'SI': 'Slovenia', 'ZA': 'South Africa', 'ES': 'Spain',
+      'SE': 'Sweden', 'CH': 'Switzerland', 'TH': 'Thailand', 'TR': 'Turkey', 'UA': 'Ukraine',
+      'AE': 'United Arab Emirates', 'GB': 'United Kingdom', 'US': 'United States', 'UY': 'Uruguay',
+      'VE': 'Venezuela', 'VN': 'Vietnam'
+    };
+    return countryMap[countryCode] || countryCode;
+  };
+
+  const getCountryFlag = (countryCode: string) => {
+    const flagMap: { [key: string]: string } = {
+      'AF': '🇦🇫', 'AL': '🇦🇱', 'DZ': '🇩🇿', 'AR': '🇦🇷', 'AU': '🇦🇺',
+      'AT': '🇦🇹', 'BD': '🇧🇩', 'BE': '🇧🇪', 'BR': '🇧🇷', 'BG': '🇧🇬',
+      'CA': '🇨🇦', 'CL': '🇨🇱', 'CN': '🇨🇳', 'CO': '🇨🇴', 'CR': '🇨🇷',
+      'HR': '🇭🇷', 'CZ': '🇨🇿', 'DK': '🇩🇰', 'EG': '🇪🇬', 'FI': '🇫🇮',
+      'FR': '🇫🇷', 'DE': '🇩🇪', 'GR': '🇬🇷', 'GT': '🇬🇹', 'HU': '🇭🇺',
+      'IS': '🇮🇸', 'IN': '🇮🇳', 'ID': '🇮🇩', 'IE': '🇮🇪', 'IL': '🇮🇱',
+      'IT': '🇮🇹', 'JP': '🇯🇵', 'KE': '🇰🇪', 'KR': '🇰🇷', 'LV': '🇱🇻',
+      'LT': '🇱🇹', 'LU': '🇱🇺', 'MY': '🇲🇾', 'MX': '🇲🇽', 'NL': '🇳🇱',
+      'NZ': '🇳🇿', 'NO': '🇳🇴', 'PK': '🇵🇰', 'PE': '🇵🇪', 'PH': '🇵🇭',
+      'PL': '🇵🇱', 'PT': '🇵🇹', 'RO': '🇷🇴', 'RU': '🇷🇺', 'SA': '🇸🇦',
+      'SG': '🇸🇬', 'SK': '🇸🇰', 'SI': '🇸🇮', 'ZA': '🇿🇦', 'ES': '🇪🇸',
+      'SE': '🇸🇪', 'CH': '🇨🇭', 'TH': '🇹🇭', 'TR': '🇹🇷', 'UA': '🇺🇦',
+      'AE': '🇦🇪', 'GB': '🇬🇧', 'US': '🇺🇸', 'UY': '🇺🇾', 'VE': '🇻🇪', 'VN': '🇻🇳'
+    };
+    return flagMap[countryCode] || '🏳️';
+  };
+
+
   if (loading) {
     return (
       <SectionContainer id={id} data-section={id}>
@@ -103,7 +143,15 @@ const Reviews: React.FC<ReviewsProps> = ({ title, subtitle, description, id }) =
             {reviews.map((review) => (
               <ReviewCard key={review.id}>
                 <ReviewHeader>
-                  <ReviewerName>{review.name}</ReviewerName>
+                  <ReviewerInfo>
+                    <ReviewerName>{review.name}</ReviewerName>
+                    {review.countrycode && (
+                      <ReviewerNationality>
+                        <FlagIcon>{getCountryFlag(review.countrycode)}</FlagIcon>
+                        {getCountryName(review.countrycode)}
+                      </ReviewerNationality>
+                    )}
+                  </ReviewerInfo>
                   <ReviewLocation>{review.location}</ReviewLocation>
                 </ReviewHeader>
                 <StarRating>
@@ -200,11 +248,30 @@ const ReviewHeader = styled.div`
   }
 `;
 
+const ReviewerInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
 const ReviewerName = styled.h4`
   font-size: 1.2rem;
   font-weight: 700;
   color: ${TEXT.primary};
   margin: 0;
+`;
+
+const ReviewerNationality = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: ${TEXT.muted};
+  font-weight: 500;
+`;
+
+const FlagIcon = styled.span`
+  font-size: 1rem;
 `;
 
 const ReviewLocation = styled.span`

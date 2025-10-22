@@ -13,6 +13,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onReviewSubmitted }) => {
     rating: 5,
     comment: '',
     location: '',
+    countrycode: '',
     date: new Date().toISOString().split('T')[0]
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -32,6 +33,13 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onReviewSubmitted }) => {
     setIsSubmitting(true);
     setError('');
 
+    // Validate all required fields
+    if (!formData.name || !formData.location || !formData.countrycode || !formData.date || !formData.comment) {
+      setError('Please fill in all required fields.');
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const { error } = await supabase
         .from('reviews')
@@ -40,6 +48,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onReviewSubmitted }) => {
           rating: formData.rating,
           comment: formData.comment,
           location: formData.location,
+          countrycode: formData.countrycode,
           date: formData.date,
           approved: true // Default to approved for immediate display
         }]);
@@ -54,6 +63,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onReviewSubmitted }) => {
         rating: 5,
         comment: '',
         location: '',
+        countrycode: '',
         date: new Date().toISOString().split('T')[0]
       });
 
@@ -114,25 +124,106 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onReviewSubmitted }) => {
         </FormGroup>
 
         <FormGroup>
-          <Label htmlFor="location">Location</Label>
+          <Label htmlFor="countrycode">Nationality</Label>
+          <Select
+            id="countrycode"
+            name="countrycode"
+            value={formData.countrycode}
+            onChange={handleInputChange}
+            required
+          >
+            <option value="">Select your nationality</option>
+            <option value="AF">Afghanistan</option>
+            <option value="AL">Albania</option>
+            <option value="DZ">Algeria</option>
+            <option value="AR">Argentina</option>
+            <option value="AU">Australia</option>
+            <option value="AT">Austria</option>
+            <option value="BD">Bangladesh</option>
+            <option value="BE">Belgium</option>
+            <option value="BR">Brazil</option>
+            <option value="BG">Bulgaria</option>
+            <option value="CA">Canada</option>
+            <option value="CL">Chile</option>
+            <option value="CN">China</option>
+            <option value="CO">Colombia</option>
+            <option value="CR">Costa Rica</option>
+            <option value="HR">Croatia</option>
+            <option value="CZ">Czech Republic</option>
+            <option value="DK">Denmark</option>
+            <option value="EG">Egypt</option>
+            <option value="FI">Finland</option>
+            <option value="FR">France</option>
+            <option value="DE">Germany</option>
+            <option value="GR">Greece</option>
+            <option value="GT">Guatemala</option>
+            <option value="HU">Hungary</option>
+            <option value="IS">Iceland</option>
+            <option value="IN">India</option>
+            <option value="ID">Indonesia</option>
+            <option value="IE">Ireland</option>
+            <option value="IL">Israel</option>
+            <option value="IT">Italy</option>
+            <option value="JP">Japan</option>
+            <option value="KE">Kenya</option>
+            <option value="KR">South Korea</option>
+            <option value="LV">Latvia</option>
+            <option value="LT">Lithuania</option>
+            <option value="LU">Luxembourg</option>
+            <option value="MY">Malaysia</option>
+            <option value="MX">Mexico</option>
+            <option value="NL">Netherlands</option>
+            <option value="NZ">New Zealand</option>
+            <option value="NO">Norway</option>
+            <option value="PK">Pakistan</option>
+            <option value="PE">Peru</option>
+            <option value="PH">Philippines</option>
+            <option value="PL">Poland</option>
+            <option value="PT">Portugal</option>
+            <option value="RO">Romania</option>
+            <option value="RU">Russia</option>
+            <option value="SA">Saudi Arabia</option>
+            <option value="SG">Singapore</option>
+            <option value="SK">Slovakia</option>
+            <option value="SI">Slovenia</option>
+            <option value="ZA">South Africa</option>
+            <option value="ES">Spain</option>
+            <option value="SE">Sweden</option>
+            <option value="CH">Switzerland</option>
+            <option value="TH">Thailand</option>
+            <option value="TR">Turkey</option>
+            <option value="UA">Ukraine</option>
+            <option value="AE">United Arab Emirates</option>
+            <option value="GB">United Kingdom</option>
+            <option value="US">United States</option>
+            <option value="UY">Uruguay</option>
+            <option value="VE">Venezuela</option>
+            <option value="VN">Vietnam</option>
+          </Select>
+        </FormGroup>
+
+        <FormGroup>
+          <Label htmlFor="location">Location *</Label>
           <Input
             type="text"
             id="location"
             name="location"
             value={formData.location}
             onChange={handleInputChange}
+            required
             placeholder="Where did you take the lesson? (e.g., El Gouna, Egypt)"
           />
         </FormGroup>
 
         <FormGroup>
-          <Label htmlFor="date">Date of Lesson</Label>
+          <Label htmlFor="date">Date of Lesson *</Label>
           <Input
             type="date"
             id="date"
             name="date"
             value={formData.date}
             onChange={handleInputChange}
+            required
           />
         </FormGroup>
 
@@ -214,6 +305,21 @@ const Input = styled.input`
   border: 2px solid #e5e5e5;
   border-radius: 8px;
   font-size: 1rem;
+  transition: all 0.3s ease;
+  
+  &:focus {
+    outline: none;
+    border-color: ${PRIMARY.main};
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+  }
+`;
+
+const Select = styled.select`
+  padding: 12px 16px;
+  border: 2px solid #e5e5e5;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: white;
   transition: all 0.3s ease;
   
   &:focus {
@@ -321,5 +427,6 @@ const SuccessText = styled.p`
   color: ${TEXT.muted};
   line-height: 1.6;
 `;
+
 
 export default ReviewForm;

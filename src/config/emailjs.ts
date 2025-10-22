@@ -7,7 +7,7 @@ export const EMAILJS_CONFIG = {
     publicKey: 'UzYS6ueU1umFjTmcS',
 
     // Recipient email address
-    toEmail: 'silcf.cr@gmail.com'
+    toEmail: 'alaswanybakar2@gmail.com'
 };
 
 // EmailJS template parameters for your custom template

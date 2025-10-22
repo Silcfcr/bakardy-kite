@@ -21,6 +21,7 @@ const Highlights = lazy(() => import("../../components/Highlights"));
 const Gallery = lazy(() => import("../../components/Gallery"));
 const WorldMap = lazy(() => import("../../components/WorldMap/index"));
 const Reviews = lazy(() => import("../../components/Reviews"));
+const Footer = lazy(() => import("../../components/Footer"));
 
 // Preload non-critical components after initial render
 const preloadComponents = () => {
@@ -31,6 +32,7 @@ const preloadComponents = () => {
   import("../../components/Gallery");
   import("../../components/WorldMap/index");
   import("../../components/Reviews");
+  import("../../components/Footer");
 };
 
 const Home = () => {
@@ -107,6 +109,9 @@ const Home = () => {
           phoneNumber={WHATSAPP_CONFIG.PHONE_NUMBER}
           message={WHATSAPP_CONFIG.DEFAULT_MESSAGE}
         />
+      </Suspense>
+      <Suspense fallback={null}>
+        <Footer />
       </Suspense>
     </Container>
   );
