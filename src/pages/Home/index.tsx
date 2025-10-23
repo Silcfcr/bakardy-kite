@@ -4,23 +4,8 @@ import Container from "../../common/Container";
 import ScrollToTop from "../../common/ScrollToTop";
 import ContentBlock from "../../components/ContentBlock";
 
-// Inline critical content to avoid render blocking
-const INTRO_CONTENT = {
-  title: "Welcome to Bakardy Kite",
-  text: "Professional kitesurfing lessons with IKO certified instructor. Learn to kite in the beautiful waters of El Gouna and worldwide locations.",
-  button: [
-    {
-      title: "Book a Lesson",
-      color: "#3182ce",
-      textColor: "white"
-    },
-    {
-      title: "More Information",
-      color: "transparent",
-      textColor: "#3182ce"
-    }
-  ]
-};
+// Import original intro content
+import IntroContent from "../../content/IntroContent.json";
 
 // Type definition for content data
 interface ContentData {
@@ -104,9 +89,9 @@ const Home = () => {
       <ScrollToTop />
       <ContentBlock
         direction="right"
-        title={INTRO_CONTENT.title}
-        content={INTRO_CONTENT.text}
-        button={INTRO_CONTENT.button}
+        title={IntroContent.title}
+        content={IntroContent.text}
+        button={IntroContent.button}
         icon="/img/Bakar.jpeg"
         id="intro"
       />
