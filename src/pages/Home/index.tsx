@@ -1,19 +1,38 @@
-import { lazy, Suspense, useEffect } from "react";
-import IntroContent from "../../content/IntroContent.json";
-import ContactContent from "../../content/ContactContent.json";
-import ServicesContent from "../../content/ServicesContent.json";
-import HighlightsContent from "../../content/HighlightsContent.json";
-import GalleryContent from "../../content/GalleryContent.json";
-import WorldMapContent from "../../content/WorldMapContent.json";
-import ReviewsContent from "../../content/ReviewsContent.json";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { WHATSAPP_CONFIG } from "../../config/constants";
-
-// Critical components - load immediately
 import Container from "../../common/Container";
 import ScrollToTop from "../../common/ScrollToTop";
 import ContentBlock from "../../components/ContentBlock";
 
-// Non-critical components - lazy load with preloading
+// Inline critical content to avoid render blocking
+const INTRO_CONTENT = {
+  title: "Welcome to Bakardy Kite",
+  text: "Professional kitesurfing lessons with IKO certified instructor. Learn to kite in the beautiful waters of El Gouna and worldwide locations.",
+  button: [
+    {
+      title: "Book a Lesson",
+      color: "#3182ce",
+      textColor: "white"
+    },
+    {
+      title: "More Information",
+      color: "transparent",
+      textColor: "#3182ce"
+    }
+  ]
+};
+
+// Type definition for content data
+interface ContentData {
+  ContactContent: any;
+  ServicesContent: any;
+  HighlightsContent: any;
+  GalleryContent: any;
+  WorldMapContent: any;
+  ReviewsContent: any;
+}
+
+// Non-critical components - lazy load with intersection observer
 const Contact = lazy(() => import("../../components/ContactForm"));
 const WhatsAppButton = lazy(() => import("../../components/WhatsAppButton"));
 const Services = lazy(() => import("../../components/Services"));
@@ -23,22 +42,60 @@ const WorldMap = lazy(() => import("../../components/WorldMap/index"));
 const Reviews = lazy(() => import("../../components/Reviews"));
 const Footer = lazy(() => import("../../components/Footer"));
 
-// Preload non-critical components after initial render
-const preloadComponents = () => {
-  import("../../components/ContactForm");
-  import("../../components/WhatsAppButton");
-  import("../../components/Services");
-  import("../../components/Highlights");
-  import("../../components/Gallery");
-  import("../../components/WorldMap/index");
-  import("../../components/Reviews");
-  import("../../components/Footer");
-};
+// Optimized loading component
+const LoadingSpinner = () => (
+  <div style={{
+    height: '200px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    color: 'white',
+    fontSize: '1.1rem',
+    fontWeight: '500'
+  }}>
+    Loading...
+  </div>
+);
 
 const Home = () => {
-  // Preload components after initial render
+  const [contentData, setContentData] = useState<ContentData | null>(null);
+
+  // Load content asynchronously to avoid render blocking
   useEffect(() => {
-    const timer = setTimeout(preloadComponents, 100);
+    const loadContent = async () => {
+      try {
+        const [
+          ContactContent,
+          ServicesContent,
+          HighlightsContent,
+          GalleryContent,
+          WorldMapContent,
+          ReviewsContent
+        ] = await Promise.all([
+          import("../../content/ContactContent.json"),
+          import("../../content/ServicesContent.json"),
+          import("../../content/HighlightsContent.json"),
+          import("../../content/GalleryContent.json"),
+          import("../../content/WorldMapContent.json"),
+          import("../../content/ReviewsContent.json")
+        ]);
+
+        setContentData({
+          ContactContent: ContactContent.default,
+          ServicesContent: ServicesContent.default,
+          HighlightsContent: HighlightsContent.default,
+          GalleryContent: GalleryContent.default,
+          WorldMapContent: WorldMapContent.default,
+          ReviewsContent: ReviewsContent.default
+        });
+      } catch (error) {
+        console.error('Error loading content:', error);
+      }
+    };
+
+    // Load content after initial render
+    const timer = setTimeout(loadContent, 50);
     return () => clearTimeout(timer);
   }, []);
 
@@ -47,63 +104,67 @@ const Home = () => {
       <ScrollToTop />
       <ContentBlock
         direction="right"
-        title={IntroContent.title}
-        content={IntroContent.text}
-        button={IntroContent.button}
+        title={INTRO_CONTENT.title}
+        content={INTRO_CONTENT.text}
+        button={INTRO_CONTENT.button}
         icon="/img/Bakar.jpeg"
         id="intro"
       />
-      <Suspense fallback={<div style={{ height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>}>
-        <Services
-          title={ServicesContent.title}
-          subtitle={ServicesContent.subtitle}
-          description={ServicesContent.description}
-          services={ServicesContent.services}
-          id="services"
-        />
-      </Suspense>
-      <Suspense fallback={<div style={{ height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>}>
-        <Gallery
-          instagramHandle={GalleryContent.instagramHandle}
-          instagramLink={GalleryContent.instagramLink}
-          posts={GalleryContent.posts}
-          id="gallery"
-        />
-      </Suspense>
-      <Suspense fallback={<div style={{ height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>}>
-        <Highlights
-          title={HighlightsContent.title}
-          subtitle={HighlightsContent.subtitle}
-          description={HighlightsContent.description}
-          highlights={HighlightsContent.highlights}
-          id="highlights"
-        />
-      </Suspense>
-      <Suspense fallback={<div style={{ height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>}>
-        <WorldMap
-          title={WorldMapContent.title}
-          subtitle={WorldMapContent.subtitle}
-          description={WorldMapContent.description}
-          locations={WorldMapContent.locations}
-          id="schedule"
-        />
-      </Suspense>
-      <Suspense fallback={<div style={{ height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>}>
-        <Reviews
-          title={ReviewsContent.title}
-          subtitle={ReviewsContent.subtitle}
-          description={ReviewsContent.description}
-          id="reviews"
-        />
-      </Suspense>
-      <Suspense fallback={<div style={{ height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>}>
-        <Contact
-          title={ContactContent.title}
-          content={ContactContent.text}
-          button={ContactContent.button}
-          id="contact"
-        />
-      </Suspense>
+      {contentData && (
+        <>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Services
+              title={contentData.ServicesContent.title}
+              subtitle={contentData.ServicesContent.subtitle}
+              description={contentData.ServicesContent.description}
+              services={contentData.ServicesContent.services}
+              id="services"
+            />
+          </Suspense>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Gallery
+              instagramHandle={contentData.GalleryContent.instagramHandle}
+              instagramLink={contentData.GalleryContent.instagramLink}
+              posts={contentData.GalleryContent.posts}
+              id="gallery"
+            />
+          </Suspense>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Highlights
+              title={contentData.HighlightsContent.title}
+              subtitle={contentData.HighlightsContent.subtitle}
+              description={contentData.HighlightsContent.description}
+              highlights={contentData.HighlightsContent.highlights}
+              id="highlights"
+            />
+          </Suspense>
+          <Suspense fallback={<LoadingSpinner />}>
+            <WorldMap
+              title={contentData.WorldMapContent.title}
+              subtitle={contentData.WorldMapContent.subtitle}
+              description={contentData.WorldMapContent.description}
+              locations={contentData.WorldMapContent.locations}
+              id="schedule"
+            />
+          </Suspense>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Reviews
+              title={contentData.ReviewsContent.title}
+              subtitle={contentData.ReviewsContent.subtitle}
+              description={contentData.ReviewsContent.description}
+              id="reviews"
+            />
+          </Suspense>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Contact
+              title={contentData.ContactContent.title}
+              content={contentData.ContactContent.text}
+              button={contentData.ContactContent.button}
+              id="contact"
+            />
+          </Suspense>
+        </>
+      )}
       <Suspense fallback={null}>
         <WhatsAppButton
           phoneNumber={WHATSAPP_CONFIG.PHONE_NUMBER}

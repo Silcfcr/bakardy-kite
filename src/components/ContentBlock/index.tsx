@@ -58,6 +58,7 @@ const ContentBlock = ({
                       (
                         item: {
                           color?: string;
+                          textColor?: string;
                           title: string;
                         },
                         id: number
@@ -66,6 +67,7 @@ const ContentBlock = ({
                           <Button
                             key={id}
                             color={item.color}
+                            textColor={item.textColor}
                             onClick={() => {
                               if (item.title === "Contact") {
                                 scrollTo("contact");

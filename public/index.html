@@ -27,12 +27,26 @@
   <meta property="twitter:site" content="https://bakardykite.com/" />
 
   <!-- Preload critical resources -->
-  <link rel="preload" href="%PUBLIC_URL%/Bakar.png" as="image" type="image/png" />
+  <link rel="preload" href="%PUBLIC_URL%/img/Bakar.jpeg" as="image" type="image/jpeg" />
   <link rel="preload" href="https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json" as="fetch" crossorigin />
+
+  <!-- Preload critical fonts -->
+  <link rel="preload" href="%PUBLIC_URL%/fonts/Motiva-Sans-Bold.ttf" as="font" type="font/ttf" crossorigin />
+  <link rel="preload" href="%PUBLIC_URL%/fonts/Motiva-Sans-Light.ttf" as="font" type="font/ttf" crossorigin />
 
   <!-- Preconnect to external domains -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" />
   <link rel="preconnect" href="https://wa.me" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- DNS prefetch for performance -->
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+  <link rel="dns-prefetch" href="//wa.me" />
+
+  <!-- Resource hints for better caching -->
+  <meta http-equiv="Cache-Control" content="public, max-age=31536000" />
+  <meta http-equiv="Expires" content="31536000" />
 
   <!--
       Notice the use of %PUBLIC_URL% in the tags above.
@@ -44,6 +58,48 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
   <title>Bakardy Kite - Professional Kitesurfing Instructor</title>
+
+  <!-- Inline critical CSS for faster rendering -->
+  <style>
+    /* Critical CSS for above-the-fold content */
+    body {
+      margin: 0;
+      font-family: 'Motiva Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background-color: #f8fafc;
+    }
+
+    #root {
+      min-height: 100vh;
+    }
+
+    /* Font display optimization */
+    @font-face {
+      font-family: 'Motiva Sans';
+      src: url('%PUBLIC_URL%/fonts/Motiva-Sans-Bold.ttf') format('truetype');
+      font-weight: 700;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Motiva Sans';
+      src: url('%PUBLIC_URL%/fonts/Motiva-Sans-Light.ttf') format('truetype');
+      font-weight: 300;
+      font-display: swap;
+    }
+
+    /* Prevent layout shift */
+    .loading-placeholder {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+    }
+  </style>
 </head>
 
 <body>
