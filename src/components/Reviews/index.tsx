@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { supabase, Review } from '../../config/supabase';
-import { TEXT, GRADIENTS } from '../../styles/colors';
+import { TEXT, GRADIENTS, INTERACTIVE } from '../../styles/colors';
 import ReviewForm from '../ReviewForm';
 
 interface ReviewsProps {
@@ -327,7 +327,7 @@ const FormButton = styled.button`
   color: white;
   border: none;
   padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: 6px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -335,9 +335,9 @@ const FormButton = styled.button`
   margin-top: 20px;
   
   &:hover {
-    background: #2c5aa0;
+    background: ${INTERACTIVE.hover};
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(49, 130, 206, 0.3);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
   }
 `;
 

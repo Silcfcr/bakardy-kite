@@ -433,7 +433,7 @@ const BookButton = styled.button<{ disabled?: boolean }>`
   color: ${props => props.disabled ? '#666' : 'white'};
   border: none;
   padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: 6px;
   font-weight: 600;
   cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
   transition: all 0.3s ease;
