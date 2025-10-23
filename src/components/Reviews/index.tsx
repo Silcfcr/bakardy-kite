@@ -26,7 +26,7 @@ const Reviews: React.FC<ReviewsProps> = ({ title, subtitle, description, id }) =
         .from('reviews')
         .select('*')
         .eq('approved', true)
-        .order('created_at', { ascending: false });
+        .order('date', { ascending: false });
 
       if (error) {
         console.error('Error fetching reviews:', error);

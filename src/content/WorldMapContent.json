@@ -36,6 +36,60 @@
                 "Professional equipment",
                 "Beginner to advanced lessons"
             ]
+        },
+        {
+            "id": "madagascar",
+            "name": "Madagascar",
+            "coordinates": [
+                46.8691,
+                -18.7669
+            ],
+            "dateRange": "❌ No future dates ahead",
+            "description": "Remote kitesurfing spots with unique wind conditions",
+            "image": "/img/madagascar.jpg",
+            "features": [
+                "Remote kitesurfing spots",
+                "Unique wind conditions",
+                "Adventure kitesurfing",
+                "Wild kitesurfing experience"
+            ],
+            "disabled": true
+        },
+        {
+            "id": "morocco",
+            "name": "Morocco",
+            "coordinates": [
+                -7.0926,
+                31.6295
+            ],
+            "dateRange": "❌ No future dates ahead",
+            "description": "Atlantic coast with strong trade winds and cultural experience",
+            "image": "/img/morocco.jpg",
+            "features": [
+                "Atlantic coast conditions",
+                "Strong trade winds",
+                "Cultural kitesurfing experience",
+                "North African kitesurfing"
+            ],
+            "disabled": true
+        },
+        {
+            "id": "zanzibar",
+            "name": "Zanzibar, Tanzania",
+            "coordinates": [
+                39.2083,
+                -6.1659
+            ],
+            "dateRange": "❌ No future dates ahead",
+            "description": "Indian Ocean tropical paradise with advanced kitesurfing spots",
+            "image": "/img/zanzibar.jpg",
+            "features": [
+                "Indian Ocean conditions",
+                "Tropical paradise setting",
+                "Advanced kitesurfing spots",
+                "East African kitesurfing"
+            ],
+            "disabled": true
         }
     ]
 }

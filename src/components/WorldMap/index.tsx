@@ -12,6 +12,7 @@ interface Location {
   description: string;
   image: string;
   features: string[];
+  disabled?: boolean;
 }
 
 interface WorldMapProps {
@@ -39,6 +40,11 @@ const WorldMap: React.FC<WorldMapProps> = ({ title, subtitle, description, locat
   };
 
   const handleBookLesson = (location: Location) => {
+    // Don't handle booking for disabled locations
+    if (location.disabled) {
+      return;
+    }
+
     if (location.id === "el-gouna") {
       // Redirect to Makani booking system for El Gouna
       window.open("https://makani.kitehub.eu/booking/", "_blank");
@@ -120,7 +126,11 @@ const WorldMap: React.FC<WorldMapProps> = ({ title, subtitle, description, locat
                 >
                   <MarkerGroup>
                     <MarkerCircle
-                      fill={selectedLocation?.id === location.id ? PRIMARY.main : INTERACTIVE.hover}
+                      fill={
+                        selectedLocation?.id === location.id
+                          ? (location.disabled ? '#e53e3e' : PRIMARY.main)
+                          : (location.disabled ? '#e53e3e' : '#38a169')
+                      }
                       stroke="white"
                       strokeWidth={window.innerWidth < 768 ? 3 : 2}
                       r={window.innerWidth < 768 ? 10 : 8}
@@ -145,13 +155,20 @@ const WorldMap: React.FC<WorldMapProps> = ({ title, subtitle, description, locat
                 <LocationName>{selectedLocation.name}</LocationName>
                 <DateRange>{selectedLocation.dateRange}</DateRange>
               </CardHeader>
-              <LocationDescription>{selectedLocation.description}</LocationDescription>
-              <FeaturesList>
-                {selectedLocation.features.map((feature, index) => (
-                  <FeatureItem key={index}>{feature}</FeatureItem>
-                ))}
-              </FeaturesList>
-              <BookButton onClick={() => handleBookLesson(selectedLocation)}>
+              {!selectedLocation.disabled && (
+                <>
+                  <LocationDescription>{selectedLocation.description}</LocationDescription>
+                  <FeaturesList>
+                    {selectedLocation.features.map((feature, index) => (
+                      <FeatureItem key={index}>{feature}</FeatureItem>
+                    ))}
+                  </FeaturesList>
+                </>
+              )}
+              <BookButton
+                onClick={() => handleBookLesson(selectedLocation)}
+                disabled={selectedLocation.disabled}
+              >
                 Book a Lesson
               </BookButton>
             </LocationCard>
@@ -411,20 +428,21 @@ const FeatureItem = styled.li`
   }
 `;
 
-const BookButton = styled.button`
-  background: ${PRIMARY.main};
-  color: white;
+const BookButton = styled.button<{ disabled?: boolean }>`
+  background: ${props => props.disabled ? '#ccc' : PRIMARY.main};
+  color: ${props => props.disabled ? '#666' : 'white'};
   border: none;
   padding: 12px 24px;
   border-radius: 8px;
   font-weight: 600;
-  cursor: pointer;
+  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
   transition: all 0.3s ease;
   width: 100%;
+  opacity: ${props => props.disabled ? 0.6 : 1};
 
   &:hover {
-    background: ${INTERACTIVE.hover};
-    transform: translateY(-2px);
+    background: ${props => props.disabled ? '#ccc' : INTERACTIVE.hover};
+    transform: ${props => props.disabled ? 'none' : 'translateY(-2px)'};
   }
 `;
 

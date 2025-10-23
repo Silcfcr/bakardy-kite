@@ -12,7 +12,7 @@ const Footer: React.FC<FooterProps> = ({ id }) => {
     <FooterContainer id={id}>
       <FooterContent>
         <FooterSection>
-          <FooterTitle>Bakar Kitesurfing</FooterTitle>
+          <FooterTitle>Bakardy Kite</FooterTitle>
           <FooterText>
             Professional kitesurfing instruction.
             Learn to kite with experienced guidance and safety-first approach.
@@ -33,15 +33,21 @@ const Footer: React.FC<FooterProps> = ({ id }) => {
         <FooterSection>
           <FooterSubtitle>Contact Info</FooterSubtitle>
           <FooterContact>
-            <ContactItem>📧 alaswanybakar2@gmail.com</ContactItem>
-            <ContactItem>📱 +201067685898</ContactItem>
+            <ContactItem>
+              <ContactIcon>@</ContactIcon>
+              alaswanybakar2@gmail.com
+            </ContactItem>
+            <ContactItem>
+              <ContactIcon>📞</ContactIcon>
+              +201067685898
+            </ContactItem>
           </FooterContact>
         </FooterSection>
       </FooterContent>
 
       <FooterBottom>
         <FooterCopyright>
-          © 2025 Bakar Kitesurfing. All rights reserved.
+          © 2025 Bakardy Kite. All rights reserved.
         </FooterCopyright>
         <FooterCounter>
           <VisitorCounter />
@@ -130,6 +136,20 @@ const ContactItem = styled.span`
   display: flex;
   align-items: center;
   gap: 8px;
+`;
+
+const ContactIcon = styled.span`
+  color: ${TEXT.primary};
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: rgba(49, 130, 206, 0.1);
+  border-radius: 50%;
+  flex-shrink: 0;
 `;
 
 const FooterBottom = styled.div`
