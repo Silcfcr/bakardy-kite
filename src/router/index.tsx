@@ -12,6 +12,18 @@ const Router = () => {
       <Header />
       <Switch>
         {routes.map((routeItem) => {
+          // Special handling for Admin component
+          if (routeItem.component === "Admin") {
+            return (
+              <Route
+                key={routeItem.component}
+                path={routeItem.path}
+                exact={routeItem.exact}
+                component={lazy(() => import(`../components/Admin`))}
+              />
+            );
+          }
+
           return (
             <Route
               key={routeItem.component}
