@@ -91,7 +91,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         setError('');
 
         // Simple password check (in production, this should be more secure)
-        if (password === 'bakardykite2024') {
+        if (password === 'admin') {
             onLogin(password);
         } else {
             setError('Incorrect password');

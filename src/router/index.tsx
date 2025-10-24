@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { Switch, Route } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import Admin from "../components/Admin";
 import routes from "./config";
 import { Styles } from "../styles/styles";
 
@@ -19,7 +20,7 @@ const Router = () => {
                 key={routeItem.component}
                 path={routeItem.path}
                 exact={routeItem.exact}
-                component={lazy(() => import(`../components/Admin`))}
+                component={Admin}
               />
             );
           }
