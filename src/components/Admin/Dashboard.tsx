@@ -4,14 +4,14 @@ import { supabase } from '../../config/supabase';
 import { PRIMARY, TEXT, BACKGROUND, INTERACTIVE, ACCENT } from '../../styles/colors';
 
 interface Review {
-    id: number;
-    name: string;
-    location: string;
-    countrycode: string;
-    date: string;
-    comment: string;
-    approved: boolean;
-    created_at: string;
+  id: number;
+  name: string;
+  location: string;
+  countrycode: string;
+  date: string;
+  comment: string;
+  approved: boolean;
+  created_at: string;
 }
 
 const DashboardContainer = styled.div`
@@ -172,156 +172,158 @@ const EmptyState = styled.div`
 `;
 
 const Dashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
-    const [reviews, setReviews] = useState<Review[]>([]);
-    const [loading, setLoading] = useState(true);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        fetchReviews();
-    }, []);
+  useEffect(() => {
+    fetchReviews();
+  }, []);
 
-    const fetchReviews = async () => {
-        try {
-            const { data, error } = await supabase
-                .from('reviews')
-                .select('*')
-                .order('created_at', { ascending: false });
+  const fetchReviews = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('reviews')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-            if (error) {
-                console.error('Error fetching reviews:', error);
-            } else {
-                setReviews(data || []);
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
+      if (error) {
+        console.error('Error fetching reviews:', error);
+        alert(`Error fetching reviews: ${error.message}`);
+      } else {
+        setReviews(data || []);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert(`Error: ${error}`);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const handleDeleteReview = async (id: number) => {
-        if (!window.confirm('Are you sure you want to delete this review?')) {
-            return;
-        }
-
-        try {
-            const { error } = await supabase
-                .from('reviews')
-                .delete()
-                .eq('id', id);
-
-            if (error) {
-                console.error('Error deleting review:', error);
-                alert('Error deleting review');
-            } else {
-                setReviews(reviews.filter(review => review.id !== id));
-                alert('Review deleted successfully');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Error deleting review');
-        }
-    };
-
-    const handleToggleApproval = async (id: number, currentApproved: boolean) => {
-        try {
-            const { error } = await supabase
-                .from('reviews')
-                .update({ approved: !currentApproved })
-                .eq('id', id);
-
-            if (error) {
-                console.error('Error updating review:', error);
-                alert('Error updating review');
-            } else {
-                setReviews(reviews.map(review =>
-                    review.id === id ? { ...review, approved: !currentApproved } : review
-                ));
-                alert(`Review ${!currentApproved ? 'approved' : 'unapproved'} successfully`);
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Error updating review');
-        }
-    };
-
-    const approvedReviews = reviews.filter(review => review.approved);
-    const pendingReviews = reviews.filter(review => !review.approved);
-
-    if (loading) {
-        return (
-            <DashboardContainer>
-                <LoadingSpinner>Loading reviews...</LoadingSpinner>
-            </DashboardContainer>
-        );
+  const handleDeleteReview = async (id: number) => {
+    if (!window.confirm('Are you sure you want to delete this review?')) {
+      return;
     }
 
+    try {
+      const { error } = await supabase
+        .from('reviews')
+        .delete()
+        .eq('id', id);
+
+      if (error) {
+        console.error('Error deleting review:', error);
+        alert(`Error deleting review: ${error.message}`);
+      } else {
+        setReviews(reviews.filter(review => review.id !== id));
+        alert('Review deleted successfully');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert(`Error deleting review: ${error}`);
+    }
+  };
+
+  const handleToggleApproval = async (id: number, currentApproved: boolean) => {
+    try {
+      const { error } = await supabase
+        .from('reviews')
+        .update({ approved: !currentApproved })
+        .eq('id', id);
+
+      if (error) {
+        console.error('Error updating review:', error);
+        alert(`Error updating review: ${error.message}`);
+      } else {
+        setReviews(reviews.map(review =>
+          review.id === id ? { ...review, approved: !currentApproved } : review
+        ));
+        alert(`Review ${!currentApproved ? 'approved' : 'unapproved'} successfully`);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert(`Error updating review: ${error}`);
+    }
+  };
+
+  const approvedReviews = reviews.filter(review => review.approved);
+  const pendingReviews = reviews.filter(review => !review.approved);
+
+  if (loading) {
     return (
-        <DashboardContainer>
-            <Header>
-                <Title>Reviews Management</Title>
-                <LogoutButton onClick={onLogout}>Logout</LogoutButton>
-            </Header>
-
-            <StatsContainer>
-                <StatCard>
-                    <StatNumber>{reviews.length}</StatNumber>
-                    <StatLabel>Total Reviews</StatLabel>
-                </StatCard>
-                <StatCard>
-                    <StatNumber>{approvedReviews.length}</StatNumber>
-                    <StatLabel>Approved</StatLabel>
-                </StatCard>
-                <StatCard>
-                    <StatNumber>{pendingReviews.length}</StatNumber>
-                    <StatLabel>Pending</StatLabel>
-                </StatCard>
-            </StatsContainer>
-
-            <ReviewsContainer>
-                <h2>All Reviews</h2>
-                {reviews.length === 0 ? (
-                    <EmptyState>No reviews found</EmptyState>
-                ) : (
-                    reviews.map((review) => (
-                        <ReviewItem key={review.id}>
-                            <ReviewHeader>
-                                <ReviewInfo>
-                                    <ReviewName>{review.name}</ReviewName>
-                                    <ReviewMeta>
-                                        {review.location} • {review.countrycode} • {new Date(review.date).toLocaleDateString()}
-                                    </ReviewMeta>
-                                </ReviewInfo>
-                                <div style={{
-                                    padding: '4px 8px',
-                                    borderRadius: '4px',
-                                    fontSize: '0.8rem',
-                                    background: review.approved ? '#c6f6d5' : '#fed7d7',
-                                    color: review.approved ? '#22543d' : '#742a2a'
-                                }}>
-                                    {review.approved ? 'Approved' : 'Pending'}
-                                </div>
-                            </ReviewHeader>
-                            <ReviewComment>{review.comment}</ReviewComment>
-                            <ReviewActions>
-                                <ActionButton
-                                    variant="approve"
-                                    onClick={() => handleToggleApproval(review.id, review.approved)}
-                                >
-                                    {review.approved ? 'Unapprove' : 'Approve'}
-                                </ActionButton>
-                                <ActionButton
-                                    variant="delete"
-                                    onClick={() => handleDeleteReview(review.id)}
-                                >
-                                    Delete
-                                </ActionButton>
-                            </ReviewActions>
-                        </ReviewItem>
-                    ))
-                )}
-            </ReviewsContainer>
-        </DashboardContainer>
+      <DashboardContainer>
+        <LoadingSpinner>Loading reviews...</LoadingSpinner>
+      </DashboardContainer>
     );
+  }
+
+  return (
+    <DashboardContainer>
+      <Header>
+        <Title>Reviews Management</Title>
+        <LogoutButton onClick={onLogout}>Logout</LogoutButton>
+      </Header>
+
+      <StatsContainer>
+        <StatCard>
+          <StatNumber>{reviews.length}</StatNumber>
+          <StatLabel>Total Reviews</StatLabel>
+        </StatCard>
+        <StatCard>
+          <StatNumber>{approvedReviews.length}</StatNumber>
+          <StatLabel>Approved</StatLabel>
+        </StatCard>
+        <StatCard>
+          <StatNumber>{pendingReviews.length}</StatNumber>
+          <StatLabel>Pending</StatLabel>
+        </StatCard>
+      </StatsContainer>
+
+      <ReviewsContainer>
+        <h2>All Reviews</h2>
+        {reviews.length === 0 ? (
+          <EmptyState>No reviews found</EmptyState>
+        ) : (
+          reviews.map((review) => (
+            <ReviewItem key={review.id}>
+              <ReviewHeader>
+                <ReviewInfo>
+                  <ReviewName>{review.name}</ReviewName>
+                  <ReviewMeta>
+                    {review.location} • {review.countrycode} • {new Date(review.date).toLocaleDateString()}
+                  </ReviewMeta>
+                </ReviewInfo>
+                <div style={{
+                  padding: '4px 8px',
+                  borderRadius: '4px',
+                  fontSize: '0.8rem',
+                  background: review.approved ? '#c6f6d5' : '#fed7d7',
+                  color: review.approved ? '#22543d' : '#742a2a'
+                }}>
+                  {review.approved ? 'Approved' : 'Pending'}
+                </div>
+              </ReviewHeader>
+              <ReviewComment>{review.comment}</ReviewComment>
+              <ReviewActions>
+                <ActionButton
+                  variant="approve"
+                  onClick={() => handleToggleApproval(review.id, review.approved)}
+                >
+                  {review.approved ? 'Unapprove' : 'Approve'}
+                </ActionButton>
+                <ActionButton
+                  variant="delete"
+                  onClick={() => handleDeleteReview(review.id)}
+                >
+                  Delete
+                </ActionButton>
+              </ReviewActions>
+            </ReviewItem>
+          ))
+        )}
+      </ReviewsContainer>
+    </DashboardContainer>
+  );
 };
 
 export default Dashboard;

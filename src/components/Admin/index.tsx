@@ -17,7 +17,7 @@ const Admin: React.FC = () => {
 
     const handleLogin = (password: string) => {
         // Simple authentication (in production, use proper auth)
-        if (password === 'bakardykite2024') {
+        if (password === 'admin') {
             localStorage.setItem('admin_auth', 'true');
             setIsAuthenticated(true);
         }
