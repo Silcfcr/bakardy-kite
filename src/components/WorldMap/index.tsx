@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps";
-import { TEXT, GRADIENTS, INTERACTIVE, PRIMARY } from "../../styles/colors";
-import { WHATSAPP_CONFIG } from "../../config/constants";
+import { TEXT, GRADIENTS, PRIMARY } from "../../styles/colors";
 
 interface Location {
   id: string;
@@ -39,25 +38,6 @@ const WorldMap: React.FC<WorldMapProps> = ({ title, subtitle, description, locat
     setSelectedLocation(location);
   };
 
-  const handleBookLesson = (location: Location) => {
-    // Don't handle booking for disabled locations
-    if (location.disabled) {
-      return;
-    }
-
-    if (location.id === "el-gouna") {
-      // Redirect to Makani booking system for El Gouna
-      window.open("https://makani.kitehub.eu/booking/", "_blank");
-    } else if (location.id === "thailand") {
-      // Redirect to Kite Club Koh Phangan for Thailand
-      window.open("https://kiteclubkohphangan.com/", "_blank");
-    } else {
-      // Use WhatsApp for other locations
-      const message = `Hi! I'd like to book a kitesurf lesson in ${location.name}. ${location.dateRange}`;
-      const whatsappUrl = `https://wa.me/${WHATSAPP_CONFIG.PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
-      window.open(whatsappUrl, '_blank');
-    }
-  };
 
   return (
     <SectionContainer id={id} data-section={id}>
@@ -165,12 +145,6 @@ const WorldMap: React.FC<WorldMapProps> = ({ title, subtitle, description, locat
                   </FeaturesList>
                 </>
               )}
-              <BookButton
-                onClick={() => handleBookLesson(selectedLocation)}
-                disabled={selectedLocation.disabled}
-              >
-                Book a Lesson
-              </BookButton>
             </LocationCard>
           )}
         </MapContainer>
@@ -428,22 +402,5 @@ const FeatureItem = styled.li`
   }
 `;
 
-const BookButton = styled.button<{ disabled?: boolean }>`
-  background: ${props => props.disabled ? '#ccc' : PRIMARY.main};
-  color: ${props => props.disabled ? '#666' : 'white'};
-  border: none;
-  padding: 12px 24px;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
-  transition: all 0.3s ease;
-  width: 100%;
-  opacity: ${props => props.disabled ? 0.6 : 1};
-
-  &:hover {
-    background: ${props => props.disabled ? '#ccc' : INTERACTIVE.hover};
-    transform: ${props => props.disabled ? 'none' : 'translateY(-2px)'};
-  }
-`;
 
 export default WorldMap;
