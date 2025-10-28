@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { PRIMARY, TEXT, BACKGROUND, INTERACTIVE } from '../../styles/colors';
+import { PRIMARY, TEXT, INTERACTIVE } from '../../styles/colors';
 
 interface LoginProps {
-    onLogin: (password: string) => void;
+  onLogin: (password: string) => void;
 }
 
 const LoginContainer = styled.div`
@@ -81,44 +81,44 @@ const ErrorMessage = styled.div`
 `;
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setLoading(true);
-        setError('');
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
 
-        // Simple password check (in production, this should be more secure)
-        if (password === 'admin') {
-            onLogin(password);
-        } else {
-            setError('Incorrect password');
-            setLoading(false);
-        }
-    };
+    // Simple password check (in production, this should be more secure)
+    if (password === 'admin') {
+      onLogin(password);
+    } else {
+      setError('Incorrect password');
+      setLoading(false);
+    }
+  };
 
-    return (
-        <LoginContainer>
-            <LoginCard>
-                <Title>Admin Login</Title>
-                <Form onSubmit={handleSubmit}>
-                    <Input
-                        type="password"
-                        placeholder="Enter admin password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                    <Button type="submit" disabled={loading}>
-                        {loading ? 'Logging in...' : 'Login'}
-                    </Button>
-                    {error && <ErrorMessage>{error}</ErrorMessage>}
-                </Form>
-            </LoginCard>
-        </LoginContainer>
-    );
+  return (
+    <LoginContainer>
+      <LoginCard>
+        <Title>Admin Login</Title>
+        <Form onSubmit={handleSubmit}>
+          <Input
+            type="password"
+            placeholder="Enter admin password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <Button type="submit" disabled={loading}>
+            {loading ? 'Logging in...' : 'Login'}
+          </Button>
+          {error && <ErrorMessage>{error}</ErrorMessage>}
+        </Form>
+      </LoginCard>
+    </LoginContainer>
+  );
 };
 
 export default Login;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { supabase } from '../../config/supabase';
-import { PRIMARY, TEXT, BACKGROUND, INTERACTIVE, ACCENT } from '../../styles/colors';
+import { PRIMARY, TEXT, BACKGROUND, ACCENT } from '../../styles/colors';
 
 interface Review {
   id: number;

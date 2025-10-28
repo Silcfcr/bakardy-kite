@@ -72,7 +72,7 @@ const ContentBlock = ({
                               if (item.title === "Contact") {
                                 scrollTo("contact");
                               } else if (item.title === "More Information") {
-                                scrollTo("services");
+                                scrollTo("schedule");
                               } else if (item.title === "WhatsApp Chat") {
                                 window.open(`https://wa.me/${WHATSAPP_CONFIG.PHONE_NUMBER}?text=${encodeURIComponent(WHATSAPP_CONFIG.DEFAULT_MESSAGE)}`, "_blank");
                               } else {

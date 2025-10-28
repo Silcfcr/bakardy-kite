@@ -10,7 +10,6 @@ import IntroContent from "../../content/IntroContent.json";
 // Type definition for content data
 interface ContentData {
   ContactContent: any;
-  ServicesContent: any;
   HighlightsContent: any;
   GalleryContent: any;
   WorldMapContent: any;
@@ -20,7 +19,6 @@ interface ContentData {
 // Non-critical components - lazy load with intersection observer
 const Contact = lazy(() => import("../../components/ContactForm"));
 const WhatsAppButton = lazy(() => import("../../components/WhatsAppButton"));
-const Services = lazy(() => import("../../components/Services"));
 const Highlights = lazy(() => import("../../components/Highlights"));
 const Gallery = lazy(() => import("../../components/Gallery"));
 const WorldMap = lazy(() => import("../../components/WorldMap/index"));
@@ -52,14 +50,12 @@ const Home = () => {
       try {
         const [
           ContactContent,
-          ServicesContent,
           HighlightsContent,
           GalleryContent,
           WorldMapContent,
           ReviewsContent
         ] = await Promise.all([
           import("../../content/ContactContent.json"),
-          import("../../content/ServicesContent.json"),
           import("../../content/HighlightsContent.json"),
           import("../../content/GalleryContent.json"),
           import("../../content/WorldMapContent.json"),
@@ -68,7 +64,6 @@ const Home = () => {
 
         setContentData({
           ContactContent: ContactContent.default,
-          ServicesContent: ServicesContent.default,
           HighlightsContent: HighlightsContent.default,
           GalleryContent: GalleryContent.default,
           WorldMapContent: WorldMapContent.default,
@@ -97,15 +92,6 @@ const Home = () => {
       />
       {contentData && (
         <>
-          <Suspense fallback={<LoadingSpinner />}>
-            <Services
-              title={contentData.ServicesContent.title}
-              subtitle={contentData.ServicesContent.subtitle}
-              description={contentData.ServicesContent.description}
-              services={contentData.ServicesContent.services}
-              id="services"
-            />
-          </Suspense>
           <Suspense fallback={<LoadingSpinner />}>
             <Gallery
               instagramHandle={contentData.GalleryContent.instagramHandle}

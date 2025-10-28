@@ -31,6 +31,11 @@ export const LogoText = styled("h1")`
 export const NavLink = styled("div")`
   display: inline-block;
   text-align: center;
+  
+  @media only screen and (max-width: 890px) {
+    display: block;
+    text-align: left;
+  }
 `;
 
 export const CustomNavLink = styled("div")`

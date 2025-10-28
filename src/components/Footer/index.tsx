@@ -23,8 +23,7 @@ const Footer: React.FC<FooterProps> = ({ id }) => {
           <FooterSubtitle>Quick Links</FooterSubtitle>
           <FooterLinks>
             <FooterLink href="#intro">About</FooterLink>
-            <FooterLink href="#services">Services</FooterLink>
-            <FooterLink href="#worldmap">Locations</FooterLink>
+            <FooterLink href="#schedule">Locations</FooterLink>
             <FooterLink href="#reviews">Reviews</FooterLink>
             <FooterLink href="#contact">Contact</FooterLink>
           </FooterLinks>
